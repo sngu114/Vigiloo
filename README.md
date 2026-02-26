@@ -1,3 +1,9 @@
+Team 4 Capstone Project.
+
+Steven Nguyen, Sergio Nuno Zuniga, Andy Tran, Nathan Soto, Caleb Zeringue, and Marcus Hudson.
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
