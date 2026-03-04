@@ -1,24 +1,43 @@
 "use client";
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Logo from '@/components/Logo';
 import { supabase } from '@/lib/supabase';
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const router = useRouter();
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     setError('');
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setSuccess('');
+
+    if (!email || !password || !confirmPassword) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+
+    const { error } = await supabase.auth.signUp({ email, password });
+
     if (error) {
       setError(error.message);
     } else {
-      router.push('/home');
+      setSuccess('Account created! Check your email to confirm your account, then sign in.');
     }
   };
 
@@ -33,33 +52,21 @@ export default function LoginPage() {
 
           <div className="space-y-6 max-w-2xl text-white">
             <h1 className="text-7xl font-bold tracking-tighter leading-tight">
-              Stay Vigilant.
+              Join Vigiloo.
             </h1>
             <p className="text-2xl text-[#E9E1FF]">
-              Join Vigiloo to master the art of digital self-defense. We provide the tools and education you need to navigate the web safely.
+              Create your account and start mastering the art of digital self-defense today.
             </p>
           </div>
         </div>
-
-        {/* Big Image Box */}
-        <div className="relative mt-auto h-96 w-full rounded-2xl bg-[#0F172A] border-8 border-white/10 shadow-2xl overflow-hidden">
-          <Image 
-            src="/taco.jpg"
-            alt="Vigiloo Security Illustration"
-            fill
-            className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 to-transparent" />
-        </div>
       </div>
 
-      {/* Right Side: Login Form */}
+      {/* Right Side: Sign Up Form */}
       <div className="w-1/2 bg-white flex flex-col justify-between p-24">
         <div className="w-full max-w-lg mx-auto space-y-12">
           <div className="space-y-3">
-            <h2 className="text-4xl font-bold tracking-tight text-[#0F172A]">Welcome Back</h2>
-            <p className="text-lg text-gray-600">Continue your learning journey with Vigiloo.</p>
+            <h2 className="text-4xl font-bold tracking-tight text-[#0F172A]">Create Account</h2>
+            <p className="text-lg text-gray-600">Get started with Vigiloo for free.</p>
           </div>
 
           <div className="space-y-6">
@@ -75,10 +82,7 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium text-gray-700">Password</label>
-                <button type="button" className="text-sm font-medium text-[#7042F4] hover:underline">Forgot password?</button>
-              </div>
+              <label className="block text-sm font-medium text-gray-700">Password</label>
               <input
                 type="password"
                 placeholder="••••••••"
@@ -88,29 +92,37 @@ export default function LoginPage() {
               />
             </div>
 
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#7042F4] focus:border-[#7042F4] outline-none"
+              />
+            </div>
+
             {error && <p className="text-red-500 text-sm">{error}</p>}
+            {success && <p className="text-green-500 text-sm">{success}</p>}
 
             <button
               type="button"
-              onClick={handleSignIn}
+              onClick={handleSignUp}
               className="w-full flex justify-center py-4 px-6 rounded-lg shadow-xl text-base font-semibold text-white bg-[#7042F4] hover:bg-[#5B34E5] transition-all transform active:scale-[0.98]"
             >
-              Sign In to Vigiloo
+              Create Account
             </button>
           </div>
 
-          <div className="relative py-4">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
-            <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-gray-400 font-bold tracking-widest">Or Continue With</span></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 font-medium transition-colors">Google</button>
-            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 font-medium transition-colors">Apple</button>
-          </div>
-
           <div className="text-center text-sm text-gray-600">
-            New to Vigiloo? <button className="font-bold text-[#7042F4] hover:underline" onClick={() => router.push('/signup')}>Create an account</button>
+            Already have an account?{' '}
+            <button
+              className="font-bold text-[#7042F4] hover:underline"
+              onClick={() => router.push('/')}
+            >
+              Sign in
+            </button>
           </div>
         </div>
 
