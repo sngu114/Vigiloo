@@ -2,8 +2,34 @@
 
 import Logo from '@/components/Logo';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export default function HomePage() {
+  const [alerts, setAlerts] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchAlerts() {
+      const { data } = await supabase
+        .from('scam_alerts')
+        .select('*')
+        .order('published_at', { ascending: false })
+        .limit(10);
+      
+      if (data && data.length > 0) {
+        // Double the data for a seamless loop
+        setAlerts([...data, ...data]);
+      }
+    }
+    fetchAlerts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans selection:bg-[#F0EBFF] selection:text-[#7042F4]">
       {/* Navigation */}
@@ -97,18 +123,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Simple Alerts Preview */}
+      {/* UPDATED: Scam Alerts Marquee Section */}
       <section className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="bg-[#0F172A] rounded-[40px] p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <h4 className="text-2xl font-bold mb-2">Latest Scam Alerts</h4>
-            <p className="text-gray-400">Stay informed about the newest threats detected by the Vigiloo network.</p>
+        <div className="mb-8">
+          <h4 className="text-4xl font-black text-[#0F172A] mb-2">Latest Scam Alerts</h4>
+          <p className="text-gray-500 font-medium">Real-time fraud reports.</p>
+        </div>
+
+        <div className="bg-[#0F172A] rounded-[40px] py-16 overflow-hidden relative marquee-mask">
+          <div className="animate-marquee flex gap-8">
+            {alerts.length > 0 ? (
+              alerts.map((alert, index) => (
+                <a 
+                  key={index}
+                  href={alert.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-[350px] flex-shrink-0 bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-all group cursor-pointer"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="bg-[#7042F4]/20 text-[#7042F4] text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-wider">Official Alert</span>
+                  </div>
+                  <h5 className="text-white font-bold text-lg mb-3 line-clamp-2 group-hover:text-[#7042F4] transition-colors">
+                    {alert.title}
+                  </h5>
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
+                    {alert.description}
+                  </p>
+                  <span className="text-white/40 text-xs font-bold group-hover:text-white transition-colors">
+                    Read Full Report →
+                  </span>
+                </a>
+              ))
+            ) : (
+              // Loading Skeleton Slabs
+              [1, 2, 3, 4].map((i) => (
+                <div key={i} className="w-[350px] h-[220px] bg-white/5 rounded-[32px] animate-pulse mx-4" />
+              ))
+            )}
           </div>
-          <Link href="/emergency">
-            <button className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-colors cursor-pointer">
-              View All Live Alerts
-            </button>
-          </Link>
         </div>
       </section>
 
