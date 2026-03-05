@@ -10,15 +10,20 @@ export default function HomePage() {
       <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
         <Logo /> 
         <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Daily Quiz</a>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Elderly Scams</a>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Youth Scams</a>
-          <Link href="/emergency" className="hover:text-[#7042F4] transition-colors">If Scammed</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
+          <Link href="/emergency" className="hover:text-[#7042F4] transition-colors cursor-pointer">If Scammed</Link>
+          
+          {/* SOCIAL MEDIA PRACTICE - Now matches other nav items */}
+          <Link href="/socialmedia" className="hover:text-[#7042F4] transition-colors cursor-pointer">
+            Social Media Practice
+          </Link>
         </div>
         
-        {/* WRAPPED IN LINK TO ROUTE TO EMERGENCY PAGE */}
+        {/* EMERGENCY BUTTON - Added cursor-pointer for the finger icon */}
         <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
             Emergency Help
           </button>
         </Link>
@@ -43,10 +48,10 @@ export default function HomePage() {
         </p>
         
         <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button className="w-full sm:w-auto bg-[#7042F4] text-white px-10 py-4 rounded-2xl font-bold shadow-2xl hover:bg-[#5B34E5] transition-all transform hover:-translate-y-1">
+          <button className="w-full sm:w-auto bg-[#7042F4] text-white px-10 py-4 rounded-2xl font-bold shadow-2xl hover:bg-[#5B34E5] transition-all transform hover:-translate-y-1 cursor-pointer">
             Start Your Protection
           </button>
-          <button className="w-full sm:w-auto bg-white text-gray-700 border border-gray-200 px-10 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all shadow-sm">
+          <button className="w-full sm:w-auto bg-white text-gray-700 border border-gray-200 px-10 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all shadow-sm cursor-pointer">
             How it Works
           </button>
         </div>
@@ -60,29 +65,32 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Elderly Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">👴</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Elderly</h3>
             <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Specialized guidance on identifying phone impersonators, medical insurance fraud, and banking transfers.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors">
+            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
               Enter Senior Hub →
             </button>
           </div>
 
+          {/* Youth Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">🎓</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Youth</h3>
             <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Stay safe from social media phishing, gaming currency scams, and deceptive influencer sponsorships.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors">
+            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
               Enter Youth Hub →
             </button>
           </div>
 
+          {/* All Scams Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">📁</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Explore All Scams</h3>
             <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Browse our complete database of scam education for all age groups and categories to become a security expert.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors">
+            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
               View All Scams 🔍
             </button>
           </div>
@@ -96,14 +104,15 @@ export default function HomePage() {
             <h4 className="text-2xl font-bold mb-2">Latest Scam Alerts</h4>
             <p className="text-gray-400">Stay informed about the newest threats detected by the Vigiloo network.</p>
           </div>
-          <Link href="#">
-            <button className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-colors">
+          <Link href="/emergency">
+            <button className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-colors cursor-pointer">
               View All Live Alerts
             </button>
           </Link>
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="bg-white border-t border-gray-100 pt-16 pb-12 px-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start">
@@ -111,9 +120,9 @@ export default function HomePage() {
              <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo Prevention Network. A non-profit initiative.</p>
           </div>
           <div className="flex space-x-10 text-sm font-bold text-gray-400">
-            <a href="#" className="hover:text-[#7042F4] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#7042F4] transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-[#7042F4] transition-colors">Contact Support</a>
+            <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Privacy Policy</Link>
+            <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Terms of Service</Link>
+            <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Contact Support</Link>
           </div>
         </div>
       </footer>

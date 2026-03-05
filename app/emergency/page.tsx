@@ -9,16 +9,22 @@ export default function EmergencyPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
-      {/* Navigation - Same as Home for Consistency */}
+      {/* Navigation - Synced with Home */}
       <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
         <Logo /> 
         <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors">Dashboard</Link>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Daily Quiz</a>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Elderly Scams</a>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">Youth Scams</a>
+          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer">Dashboard</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
+          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
+          
+          {/* Added Social Media Practice Link to match Home Navbar */}
+          <Link href="/socialmedia" className="hover:text-[#7042F4] transition-colors cursor-pointer">
+            Social Media Practice
+          </Link>
         </div>
-        {/* Active Emergency Button (non-clickable on this page) */}
+        
+        {/* Active Emergency Button - Kept red for urgency visibility */}
         <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md cursor-default">
           Emergency Help
         </button>
@@ -60,7 +66,7 @@ export default function EmergencyPage() {
               <select 
                 value={situation}
                 onChange={(e) => setSituation(e.target.value)}
-                className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl font-bold text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#7042F4]/20"
+                className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl font-bold text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#7042F4]/20 cursor-pointer"
               >
                 <option>I gave my credit card info</option>
                 <option>I shared my social security number</option>
@@ -83,7 +89,7 @@ export default function EmergencyPage() {
                 { title: "Monitor statements for 48 hours", desc: "Even after freezing, keep an eye on 'Pending' transactions. Report any suspicious line item to your bank immediately." }
               ].map((item, i) => (
                 <div key={i} className="flex items-start p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                  <input type="checkbox" className="mt-1 w-5 h-5 rounded border-gray-300 text-[#7042F4] focus:ring-[#7042F4]" />
+                  <input type="checkbox" className="mt-1 w-5 h-5 rounded border-gray-300 text-[#7042F4] focus:ring-[#7042F4] cursor-pointer" />
                   <div className="ml-4">
                     <h4 className="font-bold text-[#0F172A]">{item.title}</h4>
                     <p className="text-sm text-gray-500 font-medium">{item.desc}</p>
@@ -100,12 +106,12 @@ export default function EmergencyPage() {
               <h3 className="text-xl font-bold text-[#0F172A]">Report the Incident to Authorities</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#7042F4]/30 transition-all">
+              <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#7042F4]/30 transition-all cursor-pointer">
                 <div className="font-bold text-[#0F172A] mb-1">FBI (IC3)</div>
                 <p className="text-xs text-gray-500 mb-4">Internet Crime Complaint Center</p>
                 <span className="text-[#7042F4] text-xs font-bold underline">Report to IC3 →</span>
               </a>
-              <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener noreferrer" className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#7042F4]/30 transition-all">
+              <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener noreferrer" className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#7042F4]/30 transition-all cursor-pointer">
                 <div className="font-bold text-[#0F172A] mb-1">FTC PORTAL</div>
                 <p className="text-xs text-gray-500 mb-4">Federal Trade Commission</p>
                 <span className="text-[#7042F4] text-xs font-bold underline">Report to FTC →</span>
@@ -121,8 +127,8 @@ export default function EmergencyPage() {
             <p className="text-sm text-[#7042F4] font-medium max-w-md">Scammers use sophisticated psychological tactics. Focus on the steps above, and take them one at a time.</p>
           </div>
           <div className="flex gap-4">
-             <button className="bg-white text-gray-700 px-6 py-3 rounded-xl font-bold shadow-sm hover:bg-gray-50 transition-all">Recovery Resources</button>
-             <button className="bg-[#7042F4] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-[#5B34E5] transition-all">Chat with an Agent</button>
+             <button className="bg-white text-gray-700 px-6 py-3 rounded-xl font-bold shadow-sm hover:bg-gray-50 transition-all cursor-pointer">Recovery Resources</button>
+             <button className="bg-[#7042F4] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-[#5B34E5] transition-all cursor-pointer">Chat with an Agent</button>
           </div>
         </div>
       </main>
