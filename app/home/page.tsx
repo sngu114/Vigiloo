@@ -8,22 +8,24 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#FDFDFF] font-sans selection:bg-[#F0EBFF] selection:text-[#7042F4]">
       {/* Navigation */}
       <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        {/* Changed to default purple logo */}
         <Logo /> 
         <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
           <a href="#" className="hover:text-[#7042F4] transition-colors">Daily Quiz</a>
           <a href="#" className="hover:text-[#7042F4] transition-colors">Elderly Scams</a>
           <a href="#" className="hover:text-[#7042F4] transition-colors">Youth Scams</a>
-          <a href="#" className="hover:text-[#7042F4] transition-colors">If Scammed</a>
+          <Link href="/emergency" className="hover:text-[#7042F4] transition-colors">If Scammed</Link>
         </div>
-        <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
-          Emergency Help
-        </button>
+        
+        {/* WRAPPED IN LINK TO ROUTE TO EMERGENCY PAGE */}
+        <Link href="/emergency">
+          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+            Emergency Help
+          </button>
+        </Link>
       </nav>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden text-center pt-24 pb-16 px-4">
-        {/* Abstract Background Blur */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#7042F4] rounded-full blur-[120px]"></div>
           <div className="absolute top-20 right-1/4 w-64 h-64 bg-blue-300 rounded-full blur-[100px]"></div>
@@ -58,7 +60,6 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Elderly Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">👴</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Elderly</h3>
@@ -68,7 +69,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Youth Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">🎓</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Youth</h3>
@@ -78,7 +78,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* All Scams Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">📁</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Explore All Scams</h3>
@@ -97,17 +96,17 @@ export default function HomePage() {
             <h4 className="text-2xl font-bold mb-2">Latest Scam Alerts</h4>
             <p className="text-gray-400">Stay informed about the newest threats detected by the Vigiloo network.</p>
           </div>
-          <button className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-colors">
-            View All Live Alerts
-          </button>
+          <Link href="#">
+            <button className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-colors">
+              View All Live Alerts
+            </button>
+          </Link>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-white border-t border-gray-100 pt-16 pb-12 px-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start">
-             {/* Changed to default purple logo */}
              <Logo />
              <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo Prevention Network. A non-profit initiative.</p>
           </div>
