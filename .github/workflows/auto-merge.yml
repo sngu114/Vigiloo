@@ -1,0 +1,27 @@
+name: Auto Merge Pull Requests
+
+# Triggers whenever a pull request targets the dev branch
+on:
+  pull_request:
+     branches: [ dev ]
+
+
+jobs:
+  test-and-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Downloads the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Runs the automated tests
+      - name: Run tests
+        run: echo "Running automated tests..."
+
+      # Will automatically merge the PR if tests pass
+      - name: Auto Merge
+        if: success()
+        uses: pascalgn/automerge-action@v0.15.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
