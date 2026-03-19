@@ -6,8 +6,8 @@ import Logo from '@/components/Logo';
 
 export default function SnapchatPractice() {
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hey! Did you see that link I sent you?", sender: "friend" },
-    { id: 2, text: "It's for the free gift card giveaway 🎁", sender: "friend" }
+    { id: 1, text: "heyyyy did you see that link I sent you?", sender: "friend" },
+    { id: 2, text: "it's for the free gift card giveaway ", sender: "friend" }
   ]);
   const [input, setInput] = useState("");
   const [isPhished, setIsPhished] = useState(false); 
@@ -85,8 +85,8 @@ export default function SnapchatPractice() {
               <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" />
             </div>
             <div className="text-left">
-              <p className="font-black text-sm text-black">Alex Thompson</p>
-              <p className="text-[10px] text-black/60 font-bold uppercase tracking-widest leading-none">Snapchat • Friend</p>
+              <p className="font-black text-sm text-black">Emily Smith</p>
+              <p className="text-[10px] text-black/60 font-bold uppercase tracking-widest leading-none">Say Hi!</p>
             </div>
           </div>
 

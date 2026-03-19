@@ -170,7 +170,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start">
              <Logo />
-             <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo Prevention Network. A non-profit initiative.</p>
+             <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo - Scam Prevention Network. A non-profit initiative.</p>
           </div>
           <div className="flex space-x-10 text-sm font-bold text-gray-400">
             <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Privacy Policy</Link>
