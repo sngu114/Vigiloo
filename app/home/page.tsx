@@ -39,7 +39,7 @@ export default function HomePage() {
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          <Link href="/emergency" className="hover:text-[#7042F4] transition-colors cursor-pointer">If Scammed</Link>
+          
           
           {/* SOCIAL MEDIA PRACTICE - Now matches other nav items */}
           <Link href="/socialmedia" className="hover:text-[#7042F4] transition-colors cursor-pointer">
