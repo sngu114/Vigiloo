@@ -13,7 +13,7 @@ export default function EmergencyPage() {
       <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
         <Logo /> 
         <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer">Dashboard</Link>
+          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer">Home</Link>
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
           <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
