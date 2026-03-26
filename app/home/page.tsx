@@ -1,9 +1,9 @@
 "use client";
 
-import Logo from '@/components/Logo';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import Logo from '@/components/Logo'; // Kept ONLY for the footer section
 
 // Initialize Supabase
 const supabase = createClient(
@@ -23,7 +23,6 @@ export default function HomePage() {
         .limit(10);
       
       if (data && data.length > 0) {
-        // Double the data for a seamless loop
         setAlerts([...data, ...data]);
       }
     }
@@ -32,28 +31,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans selection:bg-[#F0EBFF] selection:text-[#7042F4]">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo /> 
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          
-          
-          {/* SOCIAL MEDIA PRACTICE - Now matches other nav items */}
-          <Link href="/socialmedia" className="hover:text-[#7042F4] transition-colors cursor-pointer">
-            Social Media Practice
-          </Link>
-        </div>
-        
-        {/* EMERGENCY BUTTON - Added cursor-pointer for the finger icon */}
-        <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-            Emergency Help
-          </button>
-        </Link>
-      </nav>
+      {/* Universal Navbar is now handled by layout.tsx */}
 
       {/* Hero Section */}
       <section className="relative overflow-hidden text-center pt-24 pb-16 px-4">
@@ -87,7 +65,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight">Who are you protecting today?</h2>
-          <p className="text-gray-400 text-lg">Choose a path to receive tailored resources and live alerts.</p>
+          <p className="text-gray-400 text-lg font-medium">Choose a path to receive tailored resources and live alerts.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -95,39 +73,55 @@ export default function HomePage() {
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">👴</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Elderly</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Specialized guidance on identifying phone impersonators, medical insurance fraud, and banking transfers.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-              Enter Senior Hub →
-            </button>
+            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Specialized guidance on identifying phone impersonators, medical insurance fraud, and banking transfers.</p>
+            <Link href="/scams/elderly" className="w-full">
+              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
+                Enter Senior Hub →
+              </button>
+            </Link>
           </div>
 
           {/* Youth Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">🎓</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Youth</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Stay safe from social media phishing, gaming currency scams, and deceptive influencer sponsorships.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-              Enter Youth Hub →
-            </button>
+            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Stay safe from social media phishing, gaming currency scams, and deceptive influencer sponsorships.</p>
+            <Link href="/scams/youth" className="w-full">
+              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
+                Enter Youth Hub →
+              </button>
+            </Link>
           </div>
 
           {/* All Scams Card */}
           <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
             <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">📁</div>
             <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Explore All Scams</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2">Browse our complete database of scam education for all age groups and categories to become a security expert.</p>
-            <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-              View All Scams 🔍
-            </button>
+            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Browse our complete database of scam education for all age groups and categories to become a security expert.</p>
+            <Link href="/scams" className="w-full">
+              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
+                View All Scams 🔍
+              </button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* UPDATED: Scam Alerts Marquee Section */}
+      {/* Scam Alerts Marquee Section */}
       <section className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="mb-8">
-          <h4 className="text-4xl font-black text-[#0F172A] mb-2">Latest Scam Alerts</h4>
-          <p className="text-gray-500 font-medium">Real-time fraud reports.</p>
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h4 className="text-4xl font-black text-[#0F172A] mb-2">Latest Scam Alerts</h4>
+            <p className="text-gray-500 font-medium">Real-time fraud reports.</p>
+          </div>
+          
+          <Link 
+            href="/news" 
+            className="text-[#7042F4] font-bold text-sm hover:underline flex items-center gap-2 group transition-all"
+          >
+            More news 
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
         </div>
 
         <div className="bg-[#0F172A] rounded-[40px] py-16 overflow-hidden relative marquee-mask">
@@ -147,7 +141,7 @@ export default function HomePage() {
                   <h5 className="text-white font-bold text-lg mb-3 line-clamp-2 group-hover:text-[#7042F4] transition-colors">
                     {alert.title}
                   </h5>
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4 font-medium">
                     {alert.description}
                   </p>
                   <span className="text-white/40 text-xs font-bold group-hover:text-white transition-colors">
@@ -156,7 +150,6 @@ export default function HomePage() {
                 </a>
               ))
             ) : (
-              // Loading Skeleton Slabs
               [1, 2, 3, 4].map((i) => (
                 <div key={i} className="w-[350px] h-[220px] bg-white/5 rounded-[32px] animate-pulse mx-4" />
               ))

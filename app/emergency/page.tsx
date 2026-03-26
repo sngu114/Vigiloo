@@ -1,7 +1,5 @@
 "use client";
 
-import Logo from '@/components/Logo';
-import Link from 'next/link';
 import { useState } from 'react';
 
 export default function EmergencyPage() {
@@ -9,26 +7,6 @@ export default function EmergencyPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
-      {/* Navigation - Synced with Home */}
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo /> 
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer">Home</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          
-          {/* Added Social Media Practice Link to match Home Navbar */}
-          <Link href="/socialmedia" className="hover:text-[#7042F4] transition-colors cursor-pointer">
-            Social Media Practice
-          </Link>
-        </div>
-        
-        {/* Active Emergency Button - Kept red for urgency visibility */}
-        <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md cursor-default">
-          Emergency Help
-        </button>
-      </nav>
 
       <main className="max-w-4xl mx-auto px-6 py-16">
         {/* Header Section */}
