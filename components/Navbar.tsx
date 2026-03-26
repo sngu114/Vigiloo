@@ -7,6 +7,11 @@ import { usePathname } from 'next/navigation';
 export default function Navbar() {
   const pathname = usePathname();
 
+  // STOPS THE NAVBAR FROM RENDERING ON THE LOGIN PAGE, epic.
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50 font-sans antialiased">
       
@@ -23,14 +28,14 @@ export default function Navbar() {
         </Link>
 
         <Link 
-          href="/scams/elderly" /* path way is sus, scams then to elderly?, its standalone. fix later */
+          href="/scams/elderly" 
           className={`${pathname === '/scams/elderly' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
         >
           Elderly Scams
         </Link>
 
         <Link 
-          href="/scams/youth" /* its standalone. fix later */
+          href="/scams/youth" 
           className={`${pathname === '/scams/youth' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
         >
           Youth Scams
@@ -45,12 +50,10 @@ export default function Navbar() {
 
         <Link 
           href="/news" 
-          className={`${pathname === '/news' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
+          className={`${pathname?.includes('/news') ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
         >
           News
-
         </Link>
-
       </div>
 
       <Link href="/emergency">
