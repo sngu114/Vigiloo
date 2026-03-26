@@ -1,6 +1,5 @@
 "use client";
 
-import Logo from '@/components/Logo';
 import Link from 'next/link';
 
 export default function SocialMediaHub() {
@@ -30,22 +29,7 @@ export default function SocialMediaHub() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
-      {/* FIXED NAVBAR */}
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo />
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer">Home</Link>
-          <Link href="/quiz" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
-          <Link href="/scams/elderly" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
-          <Link href="/scams/youth" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          <span className="text-[#7042F4] font-bold">Social Media Practice</span>
-        </div>
-        <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all cursor-pointer">
-            Emergency Help
-          </button>
-        </Link>
-      </nav>
+      {/* Universal Navbar handled by layout.tsx */}
 
       <main className="max-w-6xl mx-auto px-6 py-16">
         {/* Breadcrumb style header */}
@@ -63,7 +47,7 @@ export default function SocialMediaHub() {
           {platforms.map((platform) => (
             <div key={platform.name} className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
               
-              {/* Image Box Replacement */}
+              {/* Image Box */}
               <div 
                 className={`w-24 h-24 ${platform.color} rounded-3xl mb-8 overflow-hidden flex items-center justify-center border border-gray-100 group-hover:scale-110 transition-transform duration-300 shadow-inner bg-center bg-cover`}
                 style={{

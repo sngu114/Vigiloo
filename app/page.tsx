@@ -44,7 +44,7 @@ export default function LoginPage() {
         {/* Big Image Box */}
         <div className="relative mt-auto h-96 w-full rounded-2xl bg-[#0F172A] border-8 border-white/10 shadow-2xl overflow-hidden">
           <Image 
-            src="/taco.jpg"
+            src="/placeholder.png"
             alt="Vigiloo Security Illustration"
             fill
             className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"

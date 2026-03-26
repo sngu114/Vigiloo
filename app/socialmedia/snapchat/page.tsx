@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Logo from '@/components/Logo';
 
 export default function SnapchatPractice() {
   const [messages, setMessages] = useState([
@@ -39,22 +37,7 @@ export default function SnapchatPractice() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans">
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo /> 
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          {/* Change this to /dashboard if your home page is protected */}
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer font-bold">Home</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          <Link href="/socialmedia" className="text-[#7042F4] transition-colors cursor-pointer font-bold">Social Media Practice</Link>
-        </div>
-        <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-            Emergency Help
-          </button>
-        </Link>
-      </nav>
+      {/* Universal Navbar is now handled by layout.tsx */}
 
       <main className="max-w-4xl mx-auto pt-16 px-6 text-center pb-20">
         <h1 className="text-4xl font-black text-[#0F172A] mb-4">Snapchat Safety Simulator</h1>
