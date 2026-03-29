@@ -8,8 +8,8 @@ const PHISHING_LINK = "bit.ly/free-snaps-gift";
 
 export default function SnapchatPractice() {
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hey! Did you see that link I sent you?", sender: "friend" },
-    { id: 2, text: "It's for a free gift card giveaway 🎁", sender: "friend" },
+    { id: 1, text: "heyyyy did you see that link I sent you?", sender: "friend" },
+    { id: 2, text: "it's for the free gift card giveaway ", sender: "friend" }
   ]);
   const [input, setInput] = useState("");
   const [isPhished, setIsPhished] = useState(false);
