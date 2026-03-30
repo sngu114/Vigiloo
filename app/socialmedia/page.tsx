@@ -6,21 +6,21 @@ export default function SocialMediaHub() {
   const platforms = [
     {
       name: "Instagram",
-      imageUrl: "/instagram-preview.png",
+      imageUrl: "/instagram.png",
       desc: "Practice avoiding common influencer scams and fake giveaway alerts.",
       link: "/socialmedia/instagram",
       color: "bg-pink-50"
     },
     {
       name: "Snapchat",
-      imageUrl: "/snapchat-preview.png",
+      imageUrl: "/snapchat.png",
       desc: "Identify vanishing message scams and unauthorized login attempts.",
       link: "/socialmedia/snapchat",
       color: "bg-yellow-50"
     },
     {
       name: "TikTok",
-      imageUrl: "/tiktok-preview.png",
+      imageUrl: "/tiktok.png",
       desc: "Identify fake investment schemes and fraudulent brand partnerships.",
       link: "/socialmedia/tiktok",
       color: "bg-blue-50"

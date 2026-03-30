@@ -44,66 +44,29 @@ export default function HomePage() {
           <span className="mr-2">🛡️</span> TRUSTED SECURITY EDUCATION
         </div>
         
-        <h1 className="text-7xl font-black text-[#7042F4] mb-8 tracking-tight">Vigiloo</h1>
+        <h1 className="text-7xl font-black text-[#7042F4] mb-8 tracking-tight">Our Mission:</h1>
         
         <p className="max-w-2xl mx-auto text-gray-500 text-xl leading-relaxed font-medium">
           Empowering every generation to navigate the digital world safely. 
           We educate and protect people from evolving scams with expert guidance.
         </p>
         
-        <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button className="w-full sm:w-auto bg-[#7042F4] text-white px-10 py-4 rounded-2xl font-bold shadow-2xl hover:bg-[#5B34E5] transition-all transform hover:-translate-y-1 cursor-pointer">
-            Start Your Protection
-          </button>
-          <button className="w-full sm:w-auto bg-white text-gray-700 border border-gray-200 px-10 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all shadow-sm cursor-pointer">
-            How it Works
-          </button>
-        </div>
       </section>
 
-      {/* Path Selection Section */}
+      {/* UPDATED Path Selection Section: Centered Big Purple Button */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight">Who are you protecting today?</h2>
-          <p className="text-gray-400 text-lg font-medium">Choose a path to receive tailored resources and live alerts.</p>
+          <p className="text-gray-400 text-lg font-medium">Head on over to the lessons page to pick out your plan.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Elderly Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">👴</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Elderly</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Specialized guidance on identifying phone impersonators, medical insurance fraud, and banking transfers.</p>
-            <Link href="/scams/elderly" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                Enter Senior Hub →
-              </button>
-            </Link>
-          </div>
-
-          {/* Youth Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">🎓</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Youth</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Stay safe from social media phishing, gaming currency scams, and deceptive influencer sponsorships.</p>
-            <Link href="/scams/youth" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                Enter Youth Hub →
-              </button>
-            </Link>
-          </div>
-
-          {/* All Scams Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">📁</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Explore All Scams</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Browse our complete database of scam education for all age groups and categories to become a security expert.</p>
-            <Link href="/scams" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                View All Scams 🔍
-              </button>
-            </Link>
-          </div>
+        <div className="flex justify-center">
+          <Link href="/lessons" className="w-full max-w-md">
+            <button className="w-full bg-[#7042F4] text-white py-6 rounded-3xl font-black text-xl shadow-xl hover:bg-[#5B34E5] hover:shadow-2xl hover:shadow-[#7042F4]/30 transition-all transform hover:-translate-y-1 cursor-pointer flex items-center justify-center gap-3">
+              Get Started
+              <span className="text-2xl">→</span>
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -163,7 +126,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start">
              <Logo />
-             <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo Prevention Network. A non-profit initiative.</p>
+             <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo - Scam Prevention Network. A non-profit initiative.</p>
           </div>
           <div className="flex space-x-10 text-sm font-bold text-gray-400">
             <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Privacy Policy</Link>
