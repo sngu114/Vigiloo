@@ -1,115 +1,72 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import Link from 'next/link';
 
-const PHISHING_LINK = "verification-tiktok.net/apply";
-
-export default function TikTokPractice() {
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Congratulations! Your account is eligible for the blue verification badge.", sender: "system" },
-    { id: 2, text: "Apply now to secure your status and prevent account suspension: verification-tiktok.net/apply", sender: "system" }
-  ]);
-  const [isPhished, setIsPhished] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+export default function SocialMediaHub() {
+  const platforms = [
+    {
+      name: "Instagram",
+      imageUrl: "/instagram.png",
+      desc: "Practice avoiding common influencer scams and fake giveaway alerts.",
+      link: "/socialmedia/instagram",
+      color: "bg-pink-50"
+    },
+    {
+      name: "Snapchat",
+      imageUrl: "/snapchat.png",
+      desc: "Identify vanishing message scams and unauthorized login attempts.",
+      link: "/socialmedia/snapchat",
+      color: "bg-yellow-50"
+    },
+    {
+      name: "TikTok",
+      imageUrl: "/tiktok.png",
+      desc: "Identify fake investment schemes and fraudulent brand partnerships.",
+      link: "/socialmedia/tiktok",
+      color: "bg-blue-50"
     }
-  }, [messages]);
-
-  const renderMessageText = (text: string) => {
-    if (!text.includes(PHISHING_LINK)) return text;
-    const [before, after] = text.split(PHISHING_LINK);
-    return (
-      <>
-        {before}
-        <button
-          onClick={() => setIsPhished(true)}
-          className="text-blue-400 underline cursor-pointer hover:text-blue-300 font-bold"
-        >
-          {PHISHING_LINK}
-        </button>
-        {after}
-      </>
-    );
-  };
+  ];
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased">
-      {/* pt-28 ensures it sits below the universal navbar without overlapping */}
-      <main className="max-w-4xl mx-auto pt-28 px-6 text-center pb-20">
-        <h1 className="text-4xl font-black text-[#0F172A] mb-4">
-          TikTok Safety Simulator
-        </h1>
-        <p className="text-gray-500 mb-12 font-medium">
-          Practice identifying phishing links in a safe, controlled environment.
-        </p>
+    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
+      {/* Universal Navbar handled by layout.tsx */}
 
-        {/* Phone Container */}
-        <div className="relative mx-auto w-full max-w-[400px] aspect-[9/16] bg-white rounded-[40px] shadow-2xl border-[8px] border-[#0F172A] overflow-hidden flex flex-col">
-          
-          {/* PHISHED OVERLAY */}
-          {isPhished && (
-            <div className="absolute inset-0 z-50 bg-[#E11D48] flex flex-col items-center justify-center p-8 text-white text-center">
-              <span className="text-6xl mb-6">🚫</span>
-              <h2 className="text-3xl font-black mb-4">You've Been Phished!</h2>
-              <p className="text-sm font-medium mb-8 leading-relaxed">
-                TikTok will never DM you to verify your account. Official verification is only handled through 
-                <strong>{"Settings > Account > Verification"}</strong>
-              </p>
-              <button
-                onClick={() => setIsPhished(false)}
-                className="bg-white text-[#E11D48] px-8 py-3 rounded-2xl font-black text-sm shadow-xl active:scale-95 transition-transform cursor-pointer"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-
-          {/* TikTok Header */}
-          <div className="bg-black p-4 flex items-center justify-center border-b border-gray-800">
-            <div className="text-center">
-              <p className="font-black text-sm text-white tracking-widest uppercase">TikTok Verification</p>
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none mt-1">
-                @verification_center_bot
-              </p>
-            </div>
-          </div>
-
-          {/* Chat Area */}
-          <div
-            ref={scrollRef}
-            className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#121212] scroll-smooth"
-          >
-            {messages.map((msg) => (
-              <div key={msg.id} className="flex justify-start">
-                <div className="max-w-[90%] px-4 py-3 rounded-2xl text-[13px] font-medium shadow-sm bg-[#262626] text-white rounded-tl-none border-l-4 border-[#FE2C55]">
-                  {renderMessageText(msg.text)}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Fake Input (Non-functional for this specific scam) */}
-          <div className="p-4 bg-black border-t border-gray-800 flex gap-2">
-            <div className="flex-1 bg-[#262626] rounded-full px-5 py-3 text-sm text-gray-400 font-semibold">
-              Messages are disabled...
-            </div>
-          </div>
+      <main className="max-w-6xl mx-auto px-6 py-16">
+        {/* Breadcrumb style header */}
+        <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
+          Dashboard / <span className="text-[#7042F4]">Practice</span>
         </div>
 
-        {/* Security Tip Footer */}
-        <div className="mt-12 p-6 bg-[#F0EBFF] rounded-3xl border border-[#7042F4]/10 text-left">
-          <h3 className="font-bold text-[#7042F4] mb-2 flex items-center gap-2">
-            <span>💡</span> Security Tip
-          </h3>
-          <p className="text-sm text-gray-600 leading-relaxed font-medium">
-            Scammers often pose as "Verification Bots" or "Support Teams." 
-            Notice the URL <strong>{PHISHING_LINK}</strong>—TikTok's official domain is <strong>tiktok.com</strong>. 
-            Any other variation is a red flag!
-          </p>
+        <h1 className="text-5xl font-black text-[#0F172A] mb-4">Social Media Practice</h1>
+        <p className="text-gray-500 text-lg mb-12 max-w-2xl font-medium">
+          Select a platform to practice identifying and avoiding common social media scams in a safe, simulated environment.
+        </p>
+
+        {/* The Grid of Options */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {platforms.map((platform) => (
+            <div key={platform.name} className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
+              
+              {/* Image Box */}
+              <div 
+                className={`w-24 h-24 ${platform.color} rounded-3xl mb-8 overflow-hidden flex items-center justify-center border border-gray-100 group-hover:scale-110 transition-transform duration-300 shadow-inner bg-center bg-cover`}
+                style={{
+                  backgroundImage: platform.imageUrl ? `url(${platform.imageUrl})` : 'none',
+                }}
+              >
+                {!platform.imageUrl && <span className="text-gray-300 text-xs text-center px-2 font-bold">No Image Found</span>}
+              </div>
+
+              <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">{platform.name}</h3>
+              <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">{platform.desc}</p>
+              
+              <Link href={platform.link} className="w-full">
+                <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
+                  Practice →
+                </button>
+              </Link>
+            </div>
+          ))}
         </div>
       </main>
     </div>
