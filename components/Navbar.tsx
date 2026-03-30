@@ -40,7 +40,7 @@ export default function Navbar() {
           href="/socialmedia" 
           className={`${pathname?.includes('/socialmedia') ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
         >
-          Social Media Practice
+          Practice
         </Link>
 
         <Link 
