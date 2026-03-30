@@ -6,9 +6,9 @@ import { useState } from 'react';
 export default function ProfilePage() {
   const [user] = useState({
     name: "Doritos Los Tacos",
-    email: "stinker@example.com",
+    email: "TaiChen@example.com",
     joinedDate: "March 2026",
-    bio: "I eat gabagool and tacobell."
+    bio: "I eat tacobell."
   });
 
   const menuItems = [

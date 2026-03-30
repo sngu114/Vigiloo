@@ -44,28 +44,20 @@ export default function HomePage() {
           <span className="mr-2">🛡️</span> TRUSTED SECURITY EDUCATION
         </div>
         
-        <h1 className="text-7xl font-black text-[#7042F4] mb-8 tracking-tight">Vigiloo</h1>
+        <h1 className="text-7xl font-black text-[#7042F4] mb-8 tracking-tight">Our Mission:</h1>
         
         <p className="max-w-2xl mx-auto text-gray-500 text-xl leading-relaxed font-medium">
           Empowering every generation to navigate the digital world safely. 
           We educate and protect people from evolving scams with expert guidance.
         </p>
         
-        <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button className="w-full sm:w-auto bg-[#7042F4] text-white px-10 py-4 rounded-2xl font-bold shadow-2xl hover:bg-[#5B34E5] transition-all transform hover:-translate-y-1 cursor-pointer">
-            Start Your Protection
-          </button>
-          <button className="w-full sm:w-auto bg-white text-gray-700 border border-gray-200 px-10 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all shadow-sm cursor-pointer">
-            How it Works
-          </button>
-        </div>
       </section>
 
       {/* UPDATED Path Selection Section: Centered Big Purple Button */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center mb-10">
           <h2 className="text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight">Who are you protecting today?</h2>
-          <p className="text-gray-400 text-lg font-medium">Choose a path to receive tailored resources and live alerts.</p>
+          <p className="text-gray-400 text-lg font-medium">Head on over to the lessons page to pick out your plan.</p>
         </div>
 
         <div className="flex justify-center">
