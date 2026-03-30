@@ -61,49 +61,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Path Selection Section */}
+      {/* UPDATED Path Selection Section: Centered Big Purple Button */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight">Who are you protecting today?</h2>
           <p className="text-gray-400 text-lg font-medium">Choose a path to receive tailored resources and live alerts.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Elderly Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">👴</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Elderly</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Specialized guidance on identifying phone impersonators, medical insurance fraud, and banking transfers.</p>
-            <Link href="/scams/elderly" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                Enter Senior Hub →
-              </button>
-            </Link>
-          </div>
-
-          {/* Youth Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">🎓</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Protecting Myself / Youth</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Stay safe from social media phishing, gaming currency scams, and deceptive influencer sponsorships.</p>
-            <Link href="/scams/youth" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                Enter Youth Hub →
-              </button>
-            </Link>
-          </div>
-
-          {/* All Scams Card */}
-          <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm text-center flex flex-col items-center group hover:shadow-2xl hover:border-[#F0EBFF] transition-all duration-300">
-            <div className="w-20 h-20 bg-[#F8F7FF] rounded-3xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform duration-300">📁</div>
-            <h3 className="text-2xl font-bold mb-4 text-[#0F172A]">Explore All Scams</h3>
-            <p className="text-gray-500 leading-relaxed mb-10 flex-grow px-2 font-medium">Browse our complete database of scam education for all age groups and categories to become a security expert.</p>
-            <Link href="/scams" className="w-full">
-              <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold group-hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                View All Scams 🔍
-              </button>
-            </Link>
-          </div>
+        <div className="flex justify-center">
+          <Link href="/lessons" className="w-full max-w-md">
+            <button className="w-full bg-[#7042F4] text-white py-6 rounded-3xl font-black text-xl shadow-xl hover:bg-[#5B34E5] hover:shadow-2xl hover:shadow-[#7042F4]/30 transition-all transform hover:-translate-y-1 cursor-pointer flex items-center justify-center gap-3">
+              Get Started
+              <span className="text-2xl">→</span>
+            </button>
+          </Link>
         </div>
       </section>
 

@@ -29,18 +29,12 @@ export default function Navbar() {
         </Link>
 
         <Link 
-          href="/elderlyscams" 
+          href="/lessons" 
           className={`${pathname === '/scams/elderly' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
         >
-          Elderly Scams
+          Lessons
         </Link>
 
-        <Link 
-          href="/youthscams" 
-          className={`${pathname === '/scams/youth' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
-        >
-          Youth Scams
-        </Link>
 
         <Link 
           href="/socialmedia" 
