@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import Logo from "@/components/Logo";
 
 const PHISHING_LINK = "bit.ly/free-snaps-gift";
 
@@ -79,48 +78,9 @@ export default function SnapchatPractice() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans">
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo />
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link
-            href="/home"
-            className="hover:text-[#7042F4] transition-colors cursor-pointer font-bold"
-          >
-            Home
-          </Link>
-          <Link
-            href="#"
-            className="hover:text-[#7042F4] transition-colors cursor-pointer"
-          >
-            Daily Quiz
-          </Link>
-          <Link
-            href="#"
-            className="hover:text-[#7042F4] transition-colors cursor-pointer"
-          >
-            Elderly Scams
-          </Link>
-          <Link
-            href="#"
-            className="hover:text-[#7042F4] transition-colors cursor-pointer"
-          >
-            Youth Scams
-          </Link>
-          <Link
-            href="/socialmedia"
-            className="text-[#7042F4] transition-colors cursor-pointer font-bold"
-          >
-            Social Media Practice
-          </Link>
-        </div>
-        <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-            Emergency Help
-          </button>
-        </Link>
-      </nav>
-
+    // Replaced navigation block with a simple container to allow the universal navbar to shine
+    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased">
+      
       <main className="max-w-4xl mx-auto pt-16 px-6 text-center pb-20">
         <h1 className="text-4xl font-black text-[#0F172A] mb-4">
           Snapchat Safety Simulator
@@ -141,14 +101,14 @@ export default function SnapchatPractice() {
               </p>
               <button
                 onClick={() => setIsPhished(false)}
-                className="bg-white text-[#E11D48] px-8 py-3 rounded-2xl font-black text-sm shadow-xl active:scale-95 transition-transform"
+                className="bg-white text-[#E11D48] px-8 py-3 rounded-2xl font-black text-sm shadow-xl active:scale-95 transition-transform cursor-pointer"
               >
                 Try Again
               </button>
             </div>
           )}
 
-          {/* Header */}
+          {/* Phone Header */}
           <div className="bg-[#FFFC00] p-4 flex items-center gap-3 border-b border-gray-200">
             <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden border-2 border-white">
               <img
@@ -216,13 +176,14 @@ export default function SnapchatPractice() {
             <button
               type="submit"
               disabled={isTyping}
-              className="w-12 h-12 bg-[#FFFC00] rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform disabled:opacity-50"
+              className="w-12 h-12 bg-[#FFFC00] rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform disabled:opacity-50 cursor-pointer"
             >
               <span className="text-black text-xl">➔</span>
             </button>
           </form>
         </div>
 
+        {/* Security Tip Footer */}
         <div className="mt-12 p-6 bg-[#F0EBFF] rounded-3xl border border-[#7042F4]/10 text-left">
           <h3 className="font-bold text-[#7042F4] mb-2 flex items-center gap-2">
             <span>💡</span> Security Tip
