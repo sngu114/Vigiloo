@@ -91,23 +91,8 @@ export default function TikTokPractice() {
   return (
     <div className="min-h-screen bg-[#FDFDFF] font-sans">
       {/* --- ORIGINAL NAV BAR --- */}
-      <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <Logo /> 
-        <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
-          <Link href="/home" className="hover:text-[#7042F4] transition-colors cursor-pointer font-bold">Home</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Daily Quiz</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Elderly Scams</Link>
-          <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Youth Scams</Link>
-          <Link href="/socialmedia" className="text-[#7042F4] transition-colors cursor-pointer font-bold">Social Media Practice</Link>
-        </div>
-        <Link href="/emergency">
-          <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-            Emergency Help
-          </button>
-        </Link>
-      </nav>
 
-      <main className="max-w-4xl mx-auto pt-16 px-6 text-center pb-20">
+      <main className="max-w-4xl mx-auto pt-28 px-6 text-center pb-20">
         {/* --- ORIGINAL HEADINGS --- */}
         <h1 className="text-4xl font-black text-[#0F172A] mb-4 uppercase italic tracking-tighter">TikTok Safety Simulator</h1>
         <p className="text-gray-500 mb-8 font-medium italic">Practice identifying phishing links in a safe, controlled environment.</p>
