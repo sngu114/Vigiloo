@@ -43,6 +43,11 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen flex font-sans antialiased text-gray-900 bg-white">
+      {/* THE FIX: This hides the global navbar wrapper only on this page */}
+      <style jsx global>{`
+        .global-navbar-wrapper { display: none !important; }
+      `}</style>
+
       {/* Left Side: Marketing Panel */}
       <div className="w-1/2 bg-[#7042F4] p-24 flex flex-col justify-between">
         <div className="space-y-16">

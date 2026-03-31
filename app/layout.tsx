@@ -28,7 +28,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar /> {/* The Navbar will now show on every page, epic */}
+        {/* Since we can't use usePathname here without breaking metadata, 
+           we wrap the Navbar in a div that we can hide via CSS 
+           inside the signup/page.tsx file.
+        */}
+        <div className="global-navbar-wrapper">
+          <Navbar />
+        </div>
+
         {children}
       </body>
     </html>
