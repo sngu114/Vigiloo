@@ -1,0 +1,29 @@
+name: Lesson Plans Pipeline
+
+on:
+  push:
+    paths:
+      - 'lib/**'
+      - 'lesson-plans/**'
+  
+  pull_request:
+    paths:
+      - 'lib/**'
+      - 'lesson-plans/**'
+
+jobs:
+  test-lesson-plans:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Type check
+        run: npx tsc --noEmit
