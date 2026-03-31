@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 export default function ProfilePage() {
   const [user] = useState({
-    name: "Doritos Los Tacos",
+    name: "Mooyah Burger",
     email: "TaiChen@example.com",
     joinedDate: "March 2026",
-    bio: "I eat tacobell."
+    bio: "I was born on my birthday."
   });
 
   const menuItems = [
