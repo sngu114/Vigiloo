@@ -3,24 +3,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@/components/Logo';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const pathname = usePathname();
 
-  // STOPS THE NAVBAR FROM RENDERING ON THE LOGIN PAGE
   if (pathname === '/') {
     return null;
   }
 
   return (
-    <nav className="flex items-center justify-between px-12 py-5 bg-white border-b border-gray-100 sticky top-0 z-50 font-sans antialiased">
+    <nav className="flex items-center justify-between px-12 py-5 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 font-sans antialiased">
       
       <Link href="/home" className="transition-transform active:scale-95 cursor-pointer">
         <Logo />
       </Link>
 
-      <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600">
+      <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600 dark:text-gray-300">
         <Link 
           href="/quiz" 
           className={`${pathname === '/quiz' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
@@ -34,7 +34,6 @@ export default function Navbar() {
         >
           Lessons
         </Link>
-
 
         <Link 
           href="/socialmedia" 
@@ -53,6 +52,9 @@ export default function Navbar() {
 
       {/* Right Side Actions */}
       <div className="flex items-center space-x-6">
+
+        <ThemeToggle />
+
         <Link href="/emergency">
           <button className="bg-[#E11D48] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#BE123C] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
             Emergency Help
@@ -69,7 +71,6 @@ export default function Navbar() {
               height={40}
               className="rounded-full object-cover"
               onError={(e) => {
-                // If image fails, it shows a purple background with user initial or generic icon
                 (e.target as any).src = "https://ui-avatars.com/api/?name=User&background=7042F4&color=fff";
               }}
             />

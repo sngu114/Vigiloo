@@ -24,7 +24,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-sans antialiased text-gray-900 bg-white">
+    <div className="min-h-screen flex font-sans antialiased text-gray-900" data-login>
       {/* Left Side: Marketing Panel */}
       <div className="w-1/2 bg-[#7042F4] p-20 flex flex-col">
         <div className="space-y-12 mb-12">
