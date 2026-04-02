@@ -44,9 +44,9 @@ export default function NewsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-[#0F172A]">
-      {/* Hero Header */}
-      <section className="bg-white border-b border-gray-100 pt-20 pb-16 px-6">
+    <div className="min-h-screen font-sans antialiased" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
+  {/* Hero Header */}
+  <section className="border-b pt-20 pb-16 px-6" style={{ background: 'var(--card)', borderColor: 'var(--card-border)' }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="text-sm font-bold text-[#7042F4] uppercase tracking-widest mb-4">

@@ -44,7 +44,7 @@ export default function SocialMediaHub() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
+    <div className="min-h-screen font-sans antialiased" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
       <main className="max-w-6xl mx-auto px-6 py-16">
         <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
           Dashboard / <span className="text-[#7042F4]">Practice</span>

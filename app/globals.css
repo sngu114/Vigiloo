@@ -1,8 +1,20 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
+  --background: #FDFDFF;
   --foreground: #171717;
+  --card: #ffffff;
+  --card-border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #111827;
+  --card-border: #1f2937;
+  --muted: #9ca3af;
 }
 
 @theme inline {
@@ -12,11 +24,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--card-border);
 }
 
 body {
@@ -25,7 +34,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* --- Marquee Logic --- */
+/* Make all white backgrounds respect dark mode */
+.bg-white {
+  background: var(--card) !important;
+}
+
+/* Marquee Logic */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -34,10 +48,40 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  /* Faster speed (25s instead of 50s) */
   animation: marquee 55s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+/* Lock login page to light mode always */
+[data-login] {
+  background: #ffffff !important;
+  color: #171717 !important;
+}
+
+[data-login] input {
+  background: #ffffff !important;
+  color: #171717 !important;
+  border-color: #d1d5db !important;
+}
+
+[data-login] label {
+  color: #374151 !important;
+}
+
+[data-login] .bg-white {
+  background: #ffffff !important;
+}
+/* Make hardcoded dark text respect dark mode */
+.dark .text-\[\#0F172A\] {
+  color: #ededed !important;
+}
+
+.dark .text-gray-900 {
+  color: #ededed !important;
+}
+
+.dark .text-slate-900 {
+  color: #ededed !important;
 }

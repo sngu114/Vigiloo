@@ -3,9 +3,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import Logo from '@/components/Logo'; // Kept ONLY for the footer section
+import Logo from '@/components/Logo';
 
-// Initialize Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -30,8 +29,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans selection:bg-[#F0EBFF] selection:text-[#7042F4]">
-      {/* Universal Navbar is now handled by layout.tsx */}
+    <div className="min-h-screen bg-[#FDFDFF] dark:bg-gray-950 font-sans selection:bg-[#F0EBFF] selection:text-[#7042F4]">
 
       {/* Hero Section */}
       <section className="relative overflow-hidden text-center pt-24 pb-16 px-4">
@@ -40,23 +38,22 @@ export default function HomePage() {
           <div className="absolute top-20 right-1/4 w-64 h-64 bg-blue-300 rounded-full blur-[100px]"></div>
         </div>
 
-        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#F0EBFF] text-[#7042F4] text-xs font-bold mb-8 tracking-wide">
+        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#F0EBFF] dark:bg-[#7042F4]/20 text-[#7042F4] text-xs font-bold mb-8 tracking-wide">
           <span className="mr-2">🛡️</span> TRUSTED SECURITY EDUCATION
         </div>
         
         <h1 className="text-7xl font-black text-[#7042F4] mb-8 tracking-tight">Our Mission:</h1>
         
-        <p className="max-w-2xl mx-auto text-gray-500 text-xl leading-relaxed font-medium">
+        <p className="max-w-2xl mx-auto text-gray-500 dark:text-gray-400 text-xl leading-relaxed font-medium">
           Empowering every generation to navigate the digital world safely. 
           We educate and protect people from evolving scams with expert guidance.
         </p>
-        
       </section>
 
-      {/* UPDATED Path Selection Section: Centered Big Purple Button */}
+      {/* Path Selection Section */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="text-center mb-10">
-          <h2 className="text-5xl font-extrabold text-[#0F172A] mb-4 tracking-tight">Who are you protecting today?</h2>
+          <h2 className="text-5xl font-extrabold text-[#0F172A] dark:text-white mb-4 tracking-tight">Who are you protecting today?</h2>
           <p className="text-gray-400 text-lg font-medium">Head on over to the lessons page to pick out your plan.</p>
         </div>
 
@@ -74,7 +71,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 pb-32">
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h4 className="text-4xl font-black text-[#0F172A] mb-2">Latest Scam Alerts</h4>
+            <h4 className="text-4xl font-black text-[#0F172A] dark:text-white mb-2">Latest Scam Alerts</h4>
             <p className="text-gray-500 font-medium">Real-time fraud reports.</p>
           </div>
           
@@ -122,7 +119,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 pt-16 pb-12 px-12">
+      <footer className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pt-16 pb-12 px-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start">
              <Logo />
