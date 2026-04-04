@@ -33,6 +33,8 @@ export default function RootLayout({
           <div className="global-navbar-wrapper">
             <Navbar />
           </div>
+
+
           {children}
         </ThemeProvider>
       </body>

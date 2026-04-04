@@ -1,8 +1,9 @@
+// THIS IS THE LOGIN PAGE
 "use client";
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Logo from '@/components/Logo';
 import { supabase } from '@/lib/supabase';
 
@@ -12,8 +13,23 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
+  // Force Light Mode on this page specifically
+  useEffect(() => {
+    const root = window.document.documentElement;
+    const wasDark = root.classList.contains('dark');
+    
+    root.classList.remove('dark');
+
+    // Cleanup: restore dark mode if it was previously active when leaving login
+    return () => {
+      if (wasDark) {
+        root.classList.add('dark');
+      }
+    };
+  }, []);
+
   const handleSignIn = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault(); // Prevents page reload on form submit
+    if (e) e.preventDefault(); 
     setError('');
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -24,7 +40,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-sans antialiased text-gray-900" data-login>
+    <div className="min-h-screen flex font-sans antialiased text-gray-900 bg-white" data-login>
       {/* Left Side: Marketing Panel */}
       <div className="w-1/2 bg-[#7042F4] p-20 flex flex-col">
         <div className="space-y-12 mb-12">
@@ -42,8 +58,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Big Image Box: Changed from h-96 to flex-grow with aspect ratio */}
-        <div className="relative flex-grow w-full rounded-2xl bg-[#0F172A] border-8 border-white/10 shadow-2xl overflow-hidden min-h-[400px]">
+        <div className="relative flex-grow w-full rounded-2xl bg-[#0F172A] border-none shadow-2xl overflow-hidden min-h-[400px]">
           <Image 
             src="/placeholder.png"
             alt="Vigiloo Security Illustration"
@@ -55,7 +70,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right Side: Login Form */}
+      {/* Right Side: Login Form - Forced White Background */}
       <div className="w-1/2 bg-white flex flex-col justify-between p-24">
         <div className="w-full max-w-lg mx-auto space-y-10">
           <div className="space-y-3">
@@ -63,7 +78,6 @@ export default function LoginPage() {
             <p className="text-lg text-gray-600">Continue your learning journey with Vigiloo.</p>
           </div>
 
-          {/* Form wrapper for "Enter" key support */}
           <form onSubmit={handleSignIn} className="space-y-6">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Email Address</label>
@@ -72,7 +86,7 @@ export default function LoginPage() {
                 placeholder="name@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#7042F4] focus:border-[#7042F4] outline-none"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#7042F4] focus:border-[#7042F4] outline-none bg-white"
                 required
               />
             </div>
@@ -87,7 +101,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#7042F4] focus:border-[#7042F4] outline-none"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#7042F4] focus:border-[#7042F4] outline-none bg-white"
                 required
               />
             </div>
@@ -107,15 +121,14 @@ export default function LoginPage() {
             <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-gray-400 font-bold tracking-widest">Or Continue With</span></div>
           </div>
 
-          {/* Updated to 3 columns for Email button */}
           <div className="grid grid-cols-3 gap-3">
-            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors">Google</button>
-            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors">Apple</button>
-            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors">Email</button>
+            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors cursor-pointer bg-white">Google</button>
+            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors cursor-pointer bg-white">Apple</button>
+            <button className="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm font-semibold transition-colors cursor-pointer bg-white">Email</button>
           </div>
 
           <div className="text-center text-sm text-gray-600">
-            New to Vigiloo? <button className="font-bold text-[#7042F4] hover:underline" onClick={() => router.push('/signup')}>Create an account</button>
+            New to Vigiloo? <button className="font-bold text-[#7042F4] hover:underline cursor-pointer" onClick={() => router.push('/signup')}>Create an account</button>
           </div>
         </div>
 

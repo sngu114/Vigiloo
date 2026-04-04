@@ -14,13 +14,13 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="flex items-center justify-between px-12 py-5 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 font-sans antialiased">
+    <nav className="relative flex items-center justify-between px-12 py-5 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 font-sans antialiased">
       
       <Link href="/home" className="transition-transform active:scale-95 cursor-pointer">
         <Logo />
       </Link>
 
-      <div className="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-600 dark:text-gray-300">
+      <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center space-x-10 text-sm font-semibold text-gray-600 dark:text-gray-300">
         <Link 
           href="/quiz" 
           className={`${pathname === '/quiz' ? 'text-[#7042F4]' : 'hover:text-[#7042F4]'} transition-colors cursor-pointer tracking-tight`}
