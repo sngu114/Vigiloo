@@ -54,6 +54,7 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
 /* Lock login page to light mode always */
 [data-login] {
   background: #ffffff !important;
@@ -73,6 +74,7 @@ body {
 [data-login] .bg-white {
   background: #ffffff !important;
 }
+
 /* Make hardcoded dark text respect dark mode */
 .dark .text-\[\#0F172A\] {
   color: #ededed !important;
@@ -84,4 +86,19 @@ body {
 
 .dark .text-slate-900 {
   color: #ededed !important;
+}
+
+/* --- HackerBackground Layering Fix --- */
+
+#hacker-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ensure all main UI content stays above the canvas */
+main, section, nav, footer, header {
+  position: relative;
+  z-index: 10;
 }

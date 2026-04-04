@@ -3,6 +3,16 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+// Sub-components to keep the main return clean and less "AI-nested"
+const DetailBox = ({ label, value }: { label: string; value: string }) => (
+  <div className="space-y-2">
+    <label className="text-xs font-black uppercase tracking-widest text-gray-400">{label}</label>
+    <div className="p-4 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-xl font-semibold text-gray-700 dark:text-gray-300">
+      {value}
+    </div>
+  </div>
+);
+
 export default function ProfilePage() {
   const [user] = useState({
     name: "Mooyah Burger",
@@ -20,9 +30,8 @@ export default function ProfilePage() {
   ];
 
   return (
-    // Reset to pure white background
-    <div className="min-h-screen bg-white font-sans antialiased">
-      <div className="max-w-6xl mx-auto py-12 px-6">
+    <div className="min-h-screen bg-transparent font-sans antialiased">
+      <div className="max-w-6xl mx-auto py-12 px-6 relative z-10">
         
         <div className="flex flex-col md:flex-row gap-12">
           
@@ -47,13 +56,13 @@ export default function ProfilePage() {
 
           {/* RIGHT SIDE: Main Content */}
           <main className="flex-grow">
-            {/* Added a thin border and a very soft shadow for definition on the white background */}
-            <div className="bg-white border border-gray-200/60 rounded-[32px] p-8 md:p-12 shadow-sm">
+            {/* Transparent Box with Glassmorphism */}
+            <div className="backdrop-blur-md bg-white/5 dark:bg-gray-900/40 border border-gray-200/60 dark:border-white/10 rounded-[32px] p-8 md:p-12 shadow-sm">
               
               {/* Profile Header Section */}
-              <div className="flex flex-col sm:flex-row items-center gap-8 pb-10 border-b border-gray-100">
+              <header className="flex flex-col sm:flex-row items-center gap-8 pb-10 border-b border-gray-100 dark:border-white/10">
                 <div className="relative group">
-                  <div className="w-32 h-32 rounded-full border-2 border-[#7042F4] p-0.5 overflow-hidden bg-white">
+                  <div className="w-32 h-32 rounded-full border-2 border-[#7042F4] p-0.5 overflow-hidden bg-white dark:bg-gray-800">
                     <Image 
                       src="/profileplaceholder.png" 
                       alt="Profile Picture"
@@ -71,34 +80,24 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="text-center sm:text-left space-y-1">
-                  <h1 className="text-3xl font-black text-[#0F172A]">{user.name}</h1>
-                  <p className="text-gray-500 font-medium">{user.email}</p>
-                  <div className="inline-block mt-2 px-3 py-1 bg-[#F0EBFF] text-[#7042F4] text-xs font-bold rounded-full uppercase tracking-tighter">
+                  <h1 className="text-3xl font-black text-[#0F172A] dark:text-white">{user.name}</h1>
+                  <p className="text-gray-500 dark:text-gray-400 font-medium">{user.email}</p>
+                  <div className="inline-block mt-2 px-3 py-1 bg-[#F0EBFF] dark:bg-[#7042F4]/20 text-[#7042F4] text-xs font-bold rounded-full uppercase tracking-tighter">
                     Member since {user.joinedDate}
                   </div>
                 </div>
-              </div>
+              </header>
 
               {/* Account Details Form */}
               <div className="mt-10 space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-gray-400">Full Name</label>
-                    <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl font-semibold text-gray-700">
-                      {user.name}
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-gray-400">Email Address</label>
-                    <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl font-semibold text-gray-700">
-                      {user.email}
-                    </div>
-                  </div>
+                  <DetailBox label="Full Name" value={user.name} />
+                  <DetailBox label="Email Address" value={user.email} />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-xs font-black uppercase tracking-widest text-gray-400">Bio</label>
-                  <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl font-medium text-gray-600 leading-relaxed">
+                  <div className="p-4 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-xl font-medium text-gray-600 dark:text-gray-400 leading-relaxed">
                     {user.bio}
                   </div>
                 </div>

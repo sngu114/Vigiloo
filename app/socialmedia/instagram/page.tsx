@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect, FormEvent } from 'react';
-import Link from 'next/link';
 
 // 1. Interfaces
 interface Message {
@@ -20,7 +19,6 @@ interface Scenario {
   tip: string;
 }
 
-// 2. Instagram Scenarios
 const INSTA_SCENARIOS: Record<string, Scenario> = {
   COPYRIGHT: {
     name: "Instagram Help Center",
@@ -86,32 +84,24 @@ export default function InstagramPractice() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFF] font-sans antialiased text-gray-900">
-      {/* pt-28 ensures space for the universal navbar */}
-      <main className="max-w-4xl mx-auto pt-28 px-6 text-center pb-20">
-        <h1 className="text-4xl font-black text-[#0F172A] mb-4 tracking-tight">Instagram Safety Simulator</h1>
-        <p className="text-gray-500 mb-8 font-medium">Practice identifying phishing links in a safe, controlled environment.</p>
+    <div className="min-h-screen bg-transparent font-sans antialiased" style={{ color: 'var(--foreground)' }}>
+      <main className="max-w-4xl mx-auto pt-28 px-6 text-center pb-20 relative z-10">
+        <h1 className="text-4xl font-black mb-4 tracking-tight" style={{ color: 'var(--foreground)' }}>Instagram Safety Simulator</h1>
+        <p className="mb-8 font-medium" style={{ color: 'var(--muted)' }}>Practice identifying phishing links in a safe, controlled environment.</p>
 
-        {/* Scenario Toggles */}
         <div className="flex justify-center gap-3 mb-12">
-          <button 
-            onClick={() => setCurrentType("COPYRIGHT")}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${currentType === 'COPYRIGHT' ? 'bg-[#E1306C] text-white shadow-md scale-105' : 'bg-white border border-gray-200 text-gray-400 hover:border-[#E1306C]'}`}
-          >
-            Copyright Scam
-          </button>
-          <button 
-            onClick={() => setCurrentType("AMBASSADOR")}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${currentType === 'AMBASSADOR' ? 'bg-[#E1306C] text-white shadow-md scale-105' : 'bg-white border border-gray-200 text-gray-400 hover:border-[#E1306C]'}`}
-          >
-            Ambassador Scam
-          </button>
+          {Object.keys(INSTA_SCENARIOS).map((key) => (
+            <button 
+              key={key}
+              onClick={() => setCurrentType(key as keyof typeof INSTA_SCENARIOS)}
+              className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${currentType === key ? 'bg-[#E1306C] text-white shadow-md scale-105' : 'bg-white/10 border border-white/10 text-gray-400 hover:border-[#E1306C]'}`}
+            >
+              {key === 'COPYRIGHT' ? 'Copyright Scam' : 'Ambassador Scam'}
+            </button>
+          ))}
         </div>
 
-        {/* Instagram Phone UI */}
-        <div className="relative mx-auto w-full max-w-[340px] aspect-[9/19] bg-white rounded-[3rem] shadow-2xl border-[10px] border-[#0F172A] overflow-hidden flex flex-col">
-          
-          {/* PHISHED OVERLAY */}
+        <div className="relative mx-auto w-full max-w-[340px] aspect-[9/19] rounded-[3rem] shadow-2xl border-[10px] border-[#0F172A] overflow-hidden flex flex-col backdrop-blur-md bg-white dark:bg-black/80">
           {isPhished && (
             <div className="absolute inset-0 z-50 bg-[#E1306C] flex flex-col items-center justify-center p-8 text-white">
               <span className="text-6xl mb-6">🔒</span>
@@ -129,11 +119,10 @@ export default function InstagramPractice() {
             </div>
           )}
 
-          {/* Instagram Header */}
-          <div className="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
-            <span className="text-xl font-light">←</span>
+          <div className="px-4 py-4 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
+            <span className="text-xl font-light text-black dark:text-white">←</span>
             <div className="flex flex-col items-center">
-              <p className="text-[14px] font-bold leading-none">{scenario.name}</p>
+              <p className="text-[14px] font-bold leading-none text-black dark:text-white">{scenario.name}</p>
               <p className="text-[11px] text-gray-400 mt-1">@{scenario.handle}</p>
             </div>
             <div className="flex gap-4">
@@ -142,54 +131,43 @@ export default function InstagramPractice() {
             </div>
           </div>
 
-          {/* Chat Area */}
-          <div ref={scrollRef} className="flex-1 p-4 overflow-y-auto space-y-4 flex flex-col bg-white">
+          <div ref={scrollRef} className="flex-1 p-4 overflow-y-auto space-y-4 flex flex-col bg-white dark:bg-black/20">
             {messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                 {msg.sender === 'bot' && (
                   <img src={scenario.avatar} alt="bot" className="w-7 h-7 rounded-full mr-2 self-end mb-1" />
                 )}
                 <div className={`max-w-[80%] px-4 py-2.5 rounded-[22px] text-[14px] leading-snug ${
-                  msg.sender === 'me' 
-                    ? 'bg-[#3797F0] text-white' 
-                    : 'bg-[#EFEFEF] text-black'
+                  msg.sender === 'me' ? 'bg-[#3797F0] text-white' : 'bg-[#EFEFEF] dark:bg-white/10 text-black dark:text-white'
                 }`}>
                   {msg.text.includes(scenario.linkTrigger) ? (
                     <>
                       {msg.text.split(scenario.linkTrigger)[0]}
-                      <button 
-                        onClick={() => setIsPhished(true)} 
-                        className="text-blue-600 font-bold block mt-1 hover:underline text-left"
-                      >
+                      <button onClick={() => setIsPhished(true)} className="text-blue-600 dark:text-blue-400 font-bold block mt-1 hover:underline text-left">
                         {scenario.linkTrigger}
                       </button>
                     </>
-                  ) : (
-                    msg.text
-                  )}
+                  ) : msg.text}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Instagram Input Bar */}
-          <div className="p-4 border-t border-gray-50 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs">📷</div>
-            <div className="flex-1 bg-white border border-gray-200 px-4 py-2 rounded-full text-left">
-               <p className="text-gray-300 text-sm">Message...</p>
+          <div className="p-4 border-t border-gray-50 dark:border-white/5 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-xs">📷</div>
+            <div className="flex-1 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full text-left">
+                <p className="text-gray-300 text-sm">Message...</p>
             </div>
             <span className="text-blue-500 font-bold text-sm">Send</span>
           </div>
         </div>
 
-        {/* Security Tip Footer */}
-        <div className="mt-12 p-6 bg-[#F0EBFF] rounded-3xl border border-[#7042F4]/10 text-left">
+        <div className="mt-12 p-6 rounded-3xl border backdrop-blur-xl bg-[#7042F4]/10 border-[#7042F4]/20 text-left">
           <h3 className="font-bold text-[#7042F4] mb-2 flex items-center gap-2">
             <span>💡</span> Vigiloo Security Tip
           </h3>
-          <p className="text-sm text-gray-600 leading-relaxed font-medium">
+          <p className="text-sm leading-relaxed font-medium" style={{ color: 'var(--muted)' }}>
             {scenario.tip} Look for the <strong>Verified Blue Badge</strong> on brand accounts. 
-            If a brand DMs you but has 0 followers and no badge, it is a scam.
           </p>
         </div>
       </main>
