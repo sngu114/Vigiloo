@@ -3,6 +3,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 import Logo from '@/components/Logo';
 import { supabase } from '@/lib/supabase';
@@ -151,10 +152,10 @@ const handleForgotPassword = async () => {
         </div>
 
         <div className="flex justify-center space-x-8 text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
-          <button className="hover:text-gray-600">Privacy Policy</button>
-          <button className="hover:text-gray-600">Terms of Service</button>
-          <button className="hover:text-gray-600">Help Center</button>
-        </div>
+  <Link href="/privacy" className="hover:text-gray-600 cursor-pointer">Privacy Policy</Link>
+  <Link href="/terms" className="hover:text-gray-600 cursor-pointer">Terms of Service</Link>
+  <button className="hover:text-gray-600">Help Center</button>
+</div>
       </div>
     </div>
   );
