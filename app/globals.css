@@ -11,10 +11,10 @@
 
 .dark {
   --background: #0a0a0a;
-  --foreground: #ededed;
+  --foreground: #ffffff;
   --card: #111827;
   --card-border: #1f2937;
-  --muted: #9ca3af;
+  --muted: #e3e3e3;
 }
 
 @theme inline {

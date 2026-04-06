@@ -123,8 +123,8 @@ export default function HomePage() {
              <p className="mt-4 text-gray-400 text-sm font-medium">© 2026 Vigiloo - Scam Prevention Network. A non-profit initiative.</p>
           </div>
           <div className="flex space-x-10 text-sm font-bold text-gray-400">
-            <Link href="/privacy" className="hover:text-[#7042F4] transition-colors cursor-pointer">Privacy Policy</Link>
-            <Link href="#" className="hover:text-[#7042F4] transition-colors cursor-pointer">Terms of Service</Link>
+    <Link href="/privacy" className="hover:text-[#7042F4] transition-colors cursor-pointer">Privacy Policy</Link>
+    <Link href="/terms" className="hover:text-[#7042F4] transition-colors cursor-pointer">Terms of Service</Link>
             <Link href="/about" className="hover:text-[#7042F4] transition-colors cursor-pointer">About Us</Link>
           </div>
         </div>
