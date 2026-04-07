@@ -119,7 +119,7 @@ export default function PrivacyPolicy() {
 
         {/* Back link */}
         <div className="mt-16 pt-8 border-t" style={{ borderColor: 'var(--card-border)' }}>
-          <Link href="/" className="text-[#7042F4] font-bold hover:underline flex items-center gap-2">
+          <Link href="/home" className="text-[#7042F4] font-bold hover:underline flex items-center gap-2">
             ← Back to Vigiloo
           </Link>
         </div>

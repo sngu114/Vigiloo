@@ -32,7 +32,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-xl font-bold mb-3 text-[#7042F4]">3. Eligibility</h2>
             <p style={{ color: 'var(--muted)' }}>
-              You must be at least 13 years of age to use the Platform. By creating an account, you represent and warrant that you meet this age requirement. If you are under the age of 18, you represent that you have obtained parental or guardian consent to use the Platform. Vigiloo reserves the right to terminate accounts found to be in violation of this provision.
+              You must be at least 12 years of age to use the Platform. By creating an account, you represent and warrant that you meet this age requirement. If you are under the age of 18, you represent that you have obtained parental or guardian consent to use the Platform. Vigiloo reserves the right to terminate accounts found to be in violation of this provision.
             </p>
           </section>
 
@@ -121,7 +121,7 @@ export default function TermsOfService() {
 
         {/* Back link */}
         <div className="mt-16 pt-8 border-t" style={{ borderColor: 'var(--card-border)' }}>
-          <Link href="/" className="text-[#7042F4] font-bold hover:underline flex items-center gap-2">
+          <Link href="/home" className="text-[#7042F4] font-bold hover:underline flex items-center gap-2">
             ← Back to Vigiloo
           </Link>
         </div>
