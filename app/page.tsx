@@ -1,4 +1,3 @@
-// THIS IS THE LOGIN PAGE
 "use client";
 
 import Image from 'next/image';
@@ -14,23 +13,23 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-const [resetSent, setResetSent] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
-const handleForgotPassword = async () => {
-  if (!email) {
-    setError('Please enter your email address first.');
-    return;
-  }
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'http://localhost:3000/reset-password',
-  });
-  if (error) {
-    setError(error.message);
-  } else {
-    setResetSent(true);
-    setError('');
-  }
-};
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setError('Please enter your email address first.');
+      return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:3000/reset-password',
+    });
+    if (error) {
+      setError(error.message);
+    } else {
+      setResetSent(true);
+      setError('');
+    }
+  };
 
   const handleSignIn = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -44,24 +43,26 @@ const handleForgotPassword = async () => {
   };
 
   return (
-    <div className="min-h-screen flex font-sans antialiased" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
-      {/* Left Side: Marketing Panel */}
-      <div className="w-1/2 bg-[#7042F4] p-20 flex flex-col">
-        <div className="space-y-12 mb-12">
+    /* FIXED: Changed flex to flex-col for mobile and lg:flex-row for desktop */
+    <div className="min-h-screen flex flex-col lg:flex-row font-sans antialiased" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
+      
+      {/* Left Side: Marketing Panel (Now Top on Mobile) */}
+      <div className="w-full lg:w-1/2 bg-[#7042F4] p-10 lg:p-20 flex flex-col">
+        <div className="space-y-8 lg:space-y-12 mb-12">
           <div className="flex items-center space-x-3 text-white">
             <Logo isWhite={true} />
           </div>
-          <div className="space-y-6 max-w-2xl text-white">
-            <h1 className="text-7xl font-bold tracking-tighter leading-tight">
+          <div className="space-y-4 lg:space-y-6 max-w-2xl text-white">
+            <h1 className="text-5xl lg:text-7xl font-bold tracking-tighter leading-tight">
               Stay Vigilant.
             </h1>
-            <p className="text-2xl text-[#E9E1FF]">
+            <p className="text-xl lg:text-2xl text-[#E9E1FF]">
               Join Vigiloo to master the art of digital self-defense. We provide the tools and education you need to navigate the web safely.
             </p>
           </div>
         </div>
 
-        <div className="relative flex-grow w-full rounded-2xl bg-[#0F172A] border-none shadow-2xl overflow-hidden min-h-[400px]">
+        <div className="relative flex-grow w-full rounded-2xl bg-[#0F172A] border-none shadow-2xl overflow-hidden min-h-[300px] lg:min-h-[400px]">
           <Image
             src="/placeholder.png"
             alt="Vigiloo Security Illustration"
@@ -73,14 +74,14 @@ const handleForgotPassword = async () => {
         </div>
       </div>
 
-      {/* Right Side: Login Form */}
-      <div className="w-1/2 flex flex-col justify-between p-24" style={{ background: 'var(--card)' }}>
+      {/* Right Side: Login Form (Now Bottom on Mobile) */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-between p-10 lg:p-24" style={{ background: 'var(--card)' }}>
         <div className="flex justify-end mb-4">
           <ThemeToggle />
         </div>
         <div className="w-full max-w-lg mx-auto space-y-10">
           <div className="space-y-3">
-            <h2 className="text-4xl font-bold tracking-tight" style={{ color: 'var(--foreground)' }}>Welcome Back</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: 'var(--foreground)' }}>Welcome Back</h2>
             <p className="text-lg" style={{ color: 'var(--muted)' }}>Continue your learning journey with Vigiloo.</p>
           </div>
 
@@ -115,10 +116,10 @@ const handleForgotPassword = async () => {
             </div>
 
             {resetSent && (
-  <p className="text-green-500 text-sm font-medium">
-    Password reset email sent! Check your inbox.
-  </p>
-)}
+              <p className="text-green-500 text-sm font-medium">
+                Password reset email sent! Check your inbox.
+              </p>
+            )}
 
             {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
 
@@ -150,10 +151,11 @@ const handleForgotPassword = async () => {
           </div>
         </div>
 
-        <div className="flex justify-center space-x-8 text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
-          <button className="hover:text-gray-600">Privacy Policy</button>
-          <button className="hover:text-gray-600">Terms of Service</button>
-          <button className="hover:text-gray-600">Help Center</button>
+        {/* Footer Links */}
+        <div className="flex flex-wrap justify-center gap-4 lg:space-x-8 text-[10px] font-bold uppercase tracking-widest mt-12 lg:mt-0" style={{ color: 'var(--muted)' }}>
+          <button className="hover:text-gray-600 transition-colors">Privacy Policy</button>
+          <button className="hover:text-gray-600 transition-colors">Terms of Service</button>
+          <button className="hover:text-gray-600 transition-colors">Help Center</button>
         </div>
       </div>
     </div>
