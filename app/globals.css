@@ -102,3 +102,22 @@ main, section, nav, footer, header {
   position: relative;
   z-index: 10;
 }
+
+/* responsiveness stuff - layout primitives */
+
+@layer components {
+  /* THE SHELL */
+  .v-page-shell {
+    @apply flex flex-col lg:flex-row min-h-[calc(100vh-6rem)] w-full overflow-x-hidden;
+  }
+
+  /* THE SIDEBAR */
+  .v-sidebar-wrapper {
+    @apply w-full lg:w-1/2 p-8 md:p-12 lg:p-20 flex flex-col;
+  }
+
+  /* THE CONTENT */
+  .v-content-wrapper {
+    @apply w-full lg:w-1/2 p-6 md:p-16 lg:p-24 flex flex-col justify-between;
+  }
+}
