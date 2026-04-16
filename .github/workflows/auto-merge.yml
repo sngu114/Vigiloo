@@ -1,27 +1,42 @@
 name: Auto Merge Pull Requests
 
-# Triggers whenever a pull request targets the dev branch
 on:
   pull_request:
-     branches: [ dev ]
+    branches: [ dev ]
 
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   test-and-merge:
     runs-on: ubuntu-latest
 
     steps:
-      # Downloads the repository code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Runs the automated tests
-      - name: Run tests
-        run: echo "Running automated tests..."
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
-      # Will automatically merge the PR if tests pass
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run lint
+        run: npm run lint -- .
+
+      - name: Build app
+        run: npm run build
+
       - name: Auto Merge
         if: success()
-        uses: pascalgn/automerge-action@v0.15.3
+        uses: pascalgn/automerge-action@v0.16.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: squash
