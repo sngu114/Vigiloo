@@ -1,98 +1,145 @@
 "use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
+import { useState } from "react";
+import PracticeCard from "@/components/PracticeCard";
+import Flashcard from "@/components/Flashcard";
 
+type FlashcardItem = {
+  term: string;
+  definition: string;
+};
+
+type PlatformItem = {
+  name: string;
+  imageUrl: string;
+  description: string;
+  href: string;
+};
+
+const placeholderFlashcards: FlashcardItem[] = [
+  {
+    term: "Phishing",
+    definition:
+      "A scam where attackers send fake emails or messages to trick you into revealing sensitive info.",
+  },
+  {
+    term: "2FA",
+    definition:
+      "Two-Factor Authentication: Adding a second layer of security beyond just a password.",
+  },
+  {
+    term: "Social Engineering",
+    definition:
+      "Manipulating people into giving up confidential information through psychological trickery.",
+  },
+];
+
+const platforms: PlatformItem[] = [
+  {
+    name: "Instagram",
+    imageUrl: "/instagram.png",
+    description:
+      "Practice avoiding common influencer scams and fake giveaway alerts.",
+    href: "/socialmedia/instagram",
+  },
+  {
+    name: "Snapchat",
+    imageUrl: "/snapchat.png",
+    description:
+      "Identify vanishing message scams and unauthorized login attempts.",
+    href: "/socialmedia/snapchat",
+  },
+  {
+    name: "TikTok",
+    imageUrl: "/tiktok.png",
+    description:
+      "Identify fake investment schemes and fraudulent brand partnerships.",
+    href: "/socialmedia/tiktok",
+  },
+];
+
+/**
+ * Social media practice hub page.
+ * Displays practice platforms and interactive flashcards.
+ */
 export default function SocialMediaHub() {
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const placeholderFlashcards = [
-    { term: "Phishing", definition: "A scam where attackers send fake emails or messages to trick you into revealing sensitive info." },
-    { term: "2FA", definition: "Two-Factor Authentication: Adding a second layer of security beyond just a password." },
-    { term: "Social Engineering", definition: "Manipulating people into giving up confidential information through psychological trickery." },
-  ];
+  const handleFlipCard = () => {
+    setIsFlipped((prev) => !prev);
+  };
 
-  const platforms = [
-    { name: "Instagram", imageUrl: "/instagram.png", desc: "Practice avoiding common influencer scams and fake giveaway alerts.", link: "/socialmedia/instagram" },
-    { name: "Snapchat", imageUrl: "/snapchat.png", desc: "Identify vanishing message scams and unauthorized login attempts.", link: "/socialmedia/snapchat" },
-    { name: "TikTok", imageUrl: "/tiktok.png", desc: "Identify fake investment schemes and fraudulent brand partnerships.", link: "/socialmedia/tiktok" }
-  ];
-
-  const nextCard = () => {
+  const handleNextCard = () => {
     setIsFlipped(false);
     setCurrentCard((prev) => (prev + 1) % placeholderFlashcards.length);
   };
 
+  const activeFlashcard = placeholderFlashcards[currentCard];
+
   return (
-    <div className="min-h-screen font-sans antialiased bg-transparent" style={{ color: 'var(--foreground)' }}>
-      <main className="max-w-6xl mx-auto px-6 py-16 relative z-10">
-        <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
+    <div
+      className="min-h-screen bg-transparent font-sans antialiased"
+      style={{ color: "var(--foreground)" }}
+    >
+      <main className="relative z-10 mx-auto max-w-6xl px-6 py-16">
+        <div className="mb-4 text-sm font-bold uppercase tracking-widest text-gray-400">
           Dashboard / <span className="text-[#7042F4]">Practice</span>
         </div>
 
-        <h1 className="text-5xl font-black mb-4" style={{ color: 'var(--foreground)' }}>Social Media Practice</h1>
-        <p className="text-lg mb-12 max-w-2xl font-medium" style={{ color: 'var(--muted)' }}>
-          Select a platform to practice identifying and avoiding common social media scams in a safe, simulated environment.
+        <h1 className="mb-4 text-5xl font-black" style={{ color: "var(--foreground)" }}>
+          Social Media Practice
+        </h1>
+
+        <p
+          className="mb-12 max-w-2xl text-lg font-medium"
+          style={{ color: "var(--muted)" }}
+        >
+          Select a platform to practice identifying and avoiding common social
+          media scams in a safe, simulated environment.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        <div className="mb-24 grid grid-cols-1 gap-8 md:grid-cols-3">
           {platforms.map((platform) => (
-            <div key={platform.name} className="p-10 rounded-[40px] border shadow-sm text-center flex flex-col items-center group hover:shadow-2xl transition-all duration-300 backdrop-blur-md bg-white/5 dark:bg-gray-900/40"
-              style={{ borderColor: 'var(--card-border)' }}>
-              <div 
-                className="w-24 h-24 rounded-3xl mb-8 overflow-hidden flex items-center justify-center border group-hover:scale-110 transition-transform duration-300 shadow-inner bg-center bg-cover bg-white/10"
-                style={{ backgroundImage: platform.imageUrl ? `url(${platform.imageUrl})` : 'none', borderColor: 'var(--card-border)' }}
-              >
-                {!platform.imageUrl && <span className="text-gray-500 text-xs text-center px-2 font-bold">No Image Found</span>}
-              </div>
-              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>{platform.name}</h3>
-              <p className="leading-relaxed mb-10 flex-grow px-2 font-medium" style={{ color: 'var(--muted)' }}>{platform.desc}</p>
-              <Link href={platform.link} className="w-full">
-                <button className="w-full bg-[#7042F4] text-white py-4 rounded-2xl font-bold hover:bg-[#5B34E5] shadow-lg transition-colors cursor-pointer">
-                  Practice →
-                </button>
-              </Link>
-            </div>
+            <PracticeCard
+              key={platform.name}
+              name={platform.name}
+              imageUrl={platform.imageUrl}
+              description={platform.description}
+              href={platform.href}
+            />
           ))}
         </div>
 
-        <section className="border-t pt-20" style={{ borderColor: 'var(--card-border)' }}>
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-black mb-4" style={{ color: 'var(--foreground)' }}>Master the Terms</h2>
-            <p className="font-medium" style={{ color: 'var(--muted)' }}>Quick-fire flashcards to learn essential cybersecurity jargon.</p>
+        <section className="border-t pt-20" style={{ borderColor: "var(--card-border)" }}>
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-4xl font-black" style={{ color: "var(--foreground)" }}>
+              Master the Terms
+            </h2>
+
+            <p className="font-medium" style={{ color: "var(--muted)" }}>
+              Quick-fire flashcards to learn essential cybersecurity jargon.
+            </p>
           </div>
 
           <div className="flex flex-col items-center">
-            <div onClick={() => setIsFlipped(!isFlipped)} className="w-full max-w-lg h-64 perspective-1000 cursor-pointer group mb-8">
-              <div className={`relative w-full h-full transition-all duration-500 preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
-                <div className="absolute inset-0 backface-hidden bg-white/5 dark:bg-gray-900/60 border-2 rounded-[32px] flex items-center justify-center p-8 shadow-sm backdrop-blur-md" style={{ borderColor: 'var(--card-border)' }}>
-                  <h3 className="text-3xl font-black text-[#7042F4] tracking-tight text-center">
-                    {placeholderFlashcards[currentCard].term}
-                  </h3>
-                  <span className="absolute bottom-6 text-[10px] font-black text-gray-400 uppercase tracking-widest">Click to Flip</span>
-                </div>
-                <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#7042F4] rounded-[32px] flex items-center justify-center p-8 text-center">
-                  <p className="text-white text-lg font-bold leading-relaxed">
-                    {placeholderFlashcards[currentCard].definition}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Flashcard
+              term={activeFlashcard.term}
+              definition={activeFlashcard.definition}
+              isFlipped={isFlipped}
+              onFlip={handleFlipCard}
+            />
 
-            <button onClick={nextCard} className="bg-[#7042F4] text-white px-12 py-5 rounded-2xl font-black text-lg shadow-xl shadow-[#7042F4]/20 hover:bg-[#5B34E5] transition-all cursor-pointer flex items-center gap-3">
+            <button
+              onClick={handleNextCard}
+              className="flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-12 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5]"
+            >
               Next Flashcard →
             </button>
           </div>
         </section>
       </main>
-
-      <style jsx>{`
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
-      `}</style>
+      
     </div>
   );
 }
