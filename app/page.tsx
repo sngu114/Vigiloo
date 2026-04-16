@@ -42,26 +42,29 @@ export default function LoginPage() {
   };
 
   return (
-    /* FIXED: Changed flex to flex-col for mobile and lg:flex-row for desktop */
     <div className="min-h-screen flex flex-col lg:flex-row font-sans antialiased" style={{ background: 'var(--background)', color: 'var(--foreground)' }}>
       
-      {/* Left Side: Marketing Panel (Now Top on Mobile) */}
-      <div className="w-full lg:w-1/2 bg-[#7042F4] p-10 lg:p-20 flex flex-col">
-        <div className="space-y-8 lg:space-y-12 mb-12">
-          <div className="flex items-center space-x-3 text-white">
-            <Logo isWhite={true} />
-          </div>
-          <div className="space-y-4 lg:space-y-6 max-w-2xl text-white">
-            <h1 className="text-5xl lg:text-7xl font-bold tracking-tighter leading-tight">
-              Stay Vigilant.
-            </h1>
-            <p className="text-xl lg:text-2xl text-[#E9E1FF]">
-              Join Vigiloo to master the art of digital self-defense. We provide the tools and education you need to navigate the web safely.
-            </p>
+      {/* Left Side: Marketing & Image Panel (Shared 1/2 of screen on desktop) */}
+      <div className="w-full lg:w-1/2 flex flex-col">
+        {/* Top Messaging: Adjusted to take up 50% height */}
+        <div className="bg-[#7042F4] p-10 lg:p-20 flex-grow basis-1/2 flex items-center">
+          <div className="space-y-8 lg:space-y-12">
+            <div className="flex items-center space-x-3 text-white">
+              <Logo isWhite={true} />
+            </div>
+            <div className="space-y-4 lg:space-y-6 max-w-2xl text-white">
+              <h1 className="text-5xl lg:text-7xl font-bold tracking-tighter leading-tight">
+                Stay Vigilant.
+              </h1>
+              <p className="text-xl lg:text-2xl text-[#E9E1FF]">
+                Join Vigiloo to master the art of digital self-defense. We provide the tools and education you need to navigate the web safely.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="relative flex-grow w-full rounded-2xl bg-[#0F172A] border-none shadow-2xl overflow-hidden min-h-[300px] lg:min-h-[400px]">
+        {/* Bottom Image Area: Adjusted to take up remaining 50% height */}
+        <div className="relative basis-1/2 w-full min-h-[250px] lg:min-h-0 bg-[#0F172A]">
           <Image
             src="/placeholder.png"
             alt="Vigiloo Security Illustration"
@@ -73,7 +76,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right Side: Login Form (Now Bottom on Mobile) */}
+      {/* Right Side: Login Form (1/2 of screen on desktop) */}
       <div className="w-full lg:w-1/2 flex flex-col justify-between p-10 lg:p-24" style={{ background: 'var(--card)' }}>
         <div className="w-full max-w-lg mx-auto space-y-10">
           <div className="space-y-3">

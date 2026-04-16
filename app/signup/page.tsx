@@ -42,24 +42,23 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex font-sans antialiased text-gray-900 bg-white">
-      {/* THE FIX: This hides the global navbar wrapper only on this page */}
+    <div className="min-h-screen flex flex-col lg:flex-row font-sans antialiased text-gray-900 bg-white">
       <style jsx global>{`
         .global-navbar-wrapper { display: none !important; }
       `}</style>
 
       {/* Left Side: Marketing Panel */}
-      <div className="w-1/2 bg-[#7042F4] p-24 flex flex-col justify-between">
-        <div className="space-y-16">
+      <div className="w-full lg:w-1/2 bg-[#7042F4] p-8 md:p-12 lg:p-24 flex flex-col justify-between">
+        <div className="space-y-8 lg:space-y-16">
           <div className="flex items-center space-x-3 text-white">
             <Logo isWhite={true} />
           </div>
 
-          <div className="space-y-6 max-w-2xl text-white">
-            <h1 className="text-7xl font-bold tracking-tighter leading-tight">
+          <div className="space-y-4 lg:space-y-6 max-w-2xl text-white">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight">
               Join Vigiloo.
             </h1>
-            <p className="text-2xl text-[#E9E1FF]">
+            <p className="text-xl lg:text-2xl text-[#E9E1FF]">
               Create your account and start mastering the art of digital self-defense today.
             </p>
           </div>
@@ -67,14 +66,14 @@ export default function SignUpPage() {
       </div>
 
       {/* Right Side: Sign Up Form */}
-      <div className="w-1/2 bg-white flex flex-col justify-between p-24">
-        <div className="w-full max-w-lg mx-auto space-y-12">
+      <div className="w-full lg:w-1/2 bg-white flex flex-col justify-between p-8 md:p-12 lg:p-24">
+        <div className="w-full max-w-lg mx-auto space-y-8 lg:space-y-12">
           <div className="space-y-3">
-            <h2 className="text-4xl font-bold tracking-tight text-[#0F172A]">Create Account</h2>
-            <p className="text-lg text-gray-600">Get started with Vigiloo for free.</p>
+            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-[#0F172A]">Create Account</h2>
+            <p className="text-base lg:text-lg text-gray-600">Get started with Vigiloo for free.</p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Email Address</label>
               <input
@@ -131,10 +130,10 @@ export default function SignUpPage() {
           </div>
         </div>
 
-        <div className="flex justify-center space-x-8 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-          <button className="hover:text-gray-600">Privacy Policy</button>
-          <button className="hover:text-gray-600">Terms of Service</button>
-          <button className="hover:text-gray-600">Help Center</button>
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-8 mt-12 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+          <button className="hover:text-gray-600 whitespace-nowrap">Privacy Policy</button>
+          <button className="hover:text-gray-600 whitespace-nowrap">Terms of Service</button>
+          <button className="hover:text-gray-600 whitespace-nowrap">Help Center</button>
         </div>
       </div>
     </div>
