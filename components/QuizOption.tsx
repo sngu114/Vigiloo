@@ -1,22 +1,22 @@
 type QuizOptionProps = {
-  id: string;
+  label: string;
   text: string;
   isSelected: boolean;
-  onSelect: (id: string) => void;
+  onSelect: (value: string) => void;
 };
 
 /**
  * Reusable answer option button for quiz-style pages.
  */
 export default function QuizOption({
-  id,
+  label,
   text,
   isSelected,
   onSelect,
 }: QuizOptionProps) {
   return (
     <button
-      onClick={() => onSelect(id)}
+      onClick={() => onSelect(text)}
       className={`w-full cursor-pointer rounded-2xl border p-5 text-left font-medium transition-all duration-200 ${
         isSelected
           ? "bg-[#7042F4]/10 text-foreground"
@@ -26,7 +26,7 @@ export default function QuizOption({
         borderColor: isSelected ? "#7042F4" : "var(--card-border)",
       }}
     >
-      <span className="mr-3 font-black text-[#7042F4]">{id}.</span>
+      <span className="mr-3 font-black text-[#7042F4]">{label}.</span>
       {text}
     </button>
   );

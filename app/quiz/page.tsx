@@ -1,35 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import QuizOption from "@/components/QuizOption";
 import QuizFeedback from "@/components/QuizFeedback";
+import { quizQuestions } from "@/lib/quizQuestions";
+import { getDailyQuestion, shuffleArray } from "@/lib/quizUtils";
 
-type QuizOptionItem = {
-  id: string;
-  text: string;
-};
+const optionLabels = ["A", "B", "C", "D"];
 
-const question =
-  "You receive a text saying your bank account is locked and you must click a link within 10 minutes.";
-
-const options: QuizOptionItem[] = [
-  { id: "A", text: "It mentions your bank" },
-  { id: "B", text: "It creates urgency and asks you to click a link" },
-  { id: "C", text: "It was sent via text message" },
-  { id: "D", text: "It uses simple language" },
-];
-
-const correctAnswer = "B";
-
-const explanation =
-  "Scammers create urgency and push you to click links quickly to trick you.";
-
+/**
+ * Daily quiz page.
+ * Displays one rotating quiz question per day with randomized answer order.
+ */
 export default function QuizPage() {
   const [selected, setSelected] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSelectOption = (optionId: string) => {
-    setSelected(optionId);
+  const today = new Date();
+  const dailyQuestion = getDailyQuestion(quizQuestions, today);
+
+  const shuffledOptions = useMemo(() => {
+    return shuffleArray(dailyQuestion.options);
+  }, [dailyQuestion.id]);
+
+  const handleSelectOption = (optionText: string) => {
+    setSelected(optionText);
     setSubmitted(false);
   };
 
@@ -41,7 +36,7 @@ export default function QuizPage() {
     setSubmitted(true);
   };
 
-  const isCorrect = selected === correctAnswer;
+  const isCorrect = selected === dailyQuestion.correctAnswer;
 
   return (
     <main className="min-h-screen bg-transparent px-6 py-12 font-sans antialiased">
@@ -59,16 +54,16 @@ export default function QuizPage() {
           style={{ borderColor: "var(--card-border)" }}
         >
           <h2 className="mb-8 text-2xl font-extrabold leading-tight text-foreground">
-            {question}
+            {dailyQuestion.question}
           </h2>
 
           <div className="space-y-4">
-            {options.map((option) => (
+            {shuffledOptions.map((optionText, index) => (
               <QuizOption
-                key={option.id}
-                id={option.id}
-                text={option.text}
-                isSelected={selected === option.id}
+                key={optionText}
+                label={optionLabels[index]}
+                text={optionText}
+                isSelected={selected === optionText}
                 onSelect={handleSelectOption}
               />
             ))}
@@ -84,8 +79,8 @@ export default function QuizPage() {
           {submitted && (
             <QuizFeedback
               isCorrect={isCorrect}
-              correctAnswer={correctAnswer}
-              explanation={explanation}
+              correctAnswer={dailyQuestion.correctAnswer}
+              explanation={dailyQuestion.explanation}
             />
           )}
         </div>
