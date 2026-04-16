@@ -121,3 +121,20 @@ main, section, nav, footer, header {
     @apply w-full lg:w-1/2 p-6 md:p-16 lg:p-24 flex flex-col justify-between;
   }
 }
+
+/* Removing Page Clutter for the Social Media Page, will clean later */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
