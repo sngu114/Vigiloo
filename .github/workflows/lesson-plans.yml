@@ -2,25 +2,50 @@ name: Lesson Plans Pipeline
 
 on:
   push:
+    branches: [ main, dev ]
     paths:
+      - 'app/lessons/**'
       - 'lib/**'
-      - 'lesson-plans/**'
-  
+      - 'components/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'jest.config.js'
+      - 'tsconfig.json'
+      - 'eslint.config.mjs'
   pull_request:
+    branches: [ main, dev ]
     paths:
+      - 'app/lessons/**'
       - 'lib/**'
-      - 'lesson-plans/**'
+      - 'components/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'jest.config.js'
+      - 'tsconfig.json'
+      - 'eslint.config.mjs'
 
 jobs:
-  test-lesson-plans:
+  validate-lesson-content:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm test
+
+      - name: Run lint
+        run: npm run lint -- .
+
+      - name: Build app
+        run: npm run build
