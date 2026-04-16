@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Logo from '@/components/Logo';
 import { supabase } from '@/lib/supabase';
-import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -76,9 +75,6 @@ export default function LoginPage() {
 
       {/* Right Side: Login Form (Now Bottom on Mobile) */}
       <div className="w-full lg:w-1/2 flex flex-col justify-between p-10 lg:p-24" style={{ background: 'var(--card)' }}>
-        <div className="flex justify-end mb-4">
-          <ThemeToggle />
-        </div>
         <div className="w-full max-w-lg mx-auto space-y-10">
           <div className="space-y-3">
             <h2 className="text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: 'var(--foreground)' }}>Welcome Back</h2>
@@ -102,7 +98,7 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="block text-sm font-medium" style={{ color: 'var(--foreground)' }}>Password</label>
-                <button type="button" onClick={handleForgotPassword} className="text-sm font-medium text-[#7042F4] hover:underline">Forgot password?</button>
+                <button type="button" onClick={handleForgotPassword} className="text-sm font-medium text-[#7042F4] hover:underline cursor-pointer">Forgot password?</button>
               </div>
               <input
                 type="password"

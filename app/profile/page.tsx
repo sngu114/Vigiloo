@@ -1,8 +1,10 @@
 "use client";
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ThemeToggle } from '@/components/ThemeToggle'; // Import the toggle
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -197,8 +199,15 @@ export default function ProfilePage() {
               {activeTab === 'Settings' && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
                   <h2 className="text-2xl font-black text-[#0F172A] dark:text-white uppercase tracking-tight">Settings</h2>
+                  <div className="p-8 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div className="space-y-1 text-center sm:text-left">
+                      <h3 className="text-sm font-black uppercase tracking-widest text-[#7042F4]">Appearance</h3>
+                      <p className="text-gray-500 dark:text-gray-400 font-medium">Toggle between light and dark mode.</p>
+                    </div>
+                    <ThemeToggle />
+                  </div>
                   <div className="p-6 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl">
-                    <p className="text-gray-500 dark:text-gray-400 font-medium">Notification and theme settings are coming soon for Vigiloo.</p>
+                    <p className="text-gray-500 dark:text-gray-400 font-medium">Notification and other custom settings are coming soon for Vigiloo.</p>
                   </div>
                 </div>
               )}
