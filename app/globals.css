@@ -120,6 +120,11 @@ main, section, nav, footer, header {
   .v-content-wrapper {
     @apply w-full lg:w-1/2 p-6 md:p-16 lg:p-24 flex flex-col justify-between;
   }
+
+  /* CLEANUP CLASSES */
+  .v-glass-panel {
+    @apply bg-gray-50/50 dark:bg-gray-900/50 backdrop-blur-md rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl;
+  }
 }
 
 /* Removing Page Clutter for the Social Media Page, will clean later */
