@@ -1,5 +1,6 @@
+# updated Pipeline for lesson plans with correct paths and validation checks
 name: Lesson Plans Pipeline
-
+ 
 on:
   push:
     branches: [ main, dev ]
