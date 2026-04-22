@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, FormEvent } from 'react';
 import Link from 'next/link';
 
-// 1. Interfaces
 interface Message {
   id: number;
   text: string;
@@ -20,7 +19,6 @@ interface Scenario {
   tip: string;
 }
 
-// 2. TikTok Scenarios
 const TIKTOK_SCENARIOS: Record<string, Scenario> = {
   VERIFICATION: {
     name: "TikTok Verification",
@@ -68,22 +66,47 @@ export default function TikTokPractice() {
     }
   }, [messages]);
 
-  const handleSendMessage = (e: FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+  const [isTyping, setIsTyping] = useState(false);
 
-    const userMsg: Message = { id: Date.now(), text: input, sender: "me" };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
+const handleSendMessage = async (e: FormEvent) => {
+  e.preventDefault();
+  if (!input.trim() || isTyping) return;
 
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { 
-        id: Date.now() + 1, 
-        text: scenario.botReply, 
-        sender: "bot" 
-      }]);
-    }, 1200);
-  };
+  const userMsg: Message = { id: Date.now(), text: input, sender: "me" };
+  const updatedMessages = [...messages, userMsg];
+  setMessages(updatedMessages);
+  setInput("");
+  setIsTyping(true);
+
+  try {
+    const response = await fetch("/api/sync/tiktok-bot", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        history: updatedMessages.map((m) => ({
+          role: m.sender === "me" ? "user" : "model",
+          parts: [{ text: m.text }],
+        })),
+        scenarioType: currentType,
+      }),
+    });
+
+    const data = await response.json();
+    setMessages((prev) => [...prev, {
+      id: Date.now() + 1,
+      text: data.reply,
+      sender: "bot",
+    }]);
+  } catch {
+    setMessages((prev) => [...prev, {
+      id: Date.now() + 1,
+      text: scenario.botReply,
+      sender: "bot",
+    }]);
+  } finally {
+    setIsTyping(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-transparent font-sans antialiased">
