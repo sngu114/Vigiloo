@@ -1,8 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createClient } from '@supabase/supabase-js';
 import PracticeCard from "@/components/PracticeCard";
 import Flashcard from "@/components/Flashcard";
+
+// Initialize Supabase
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 type FlashcardItem = {
   term: string;
@@ -15,24 +22,6 @@ type PlatformItem = {
   description: string;
   href: string;
 };
-
-const placeholderFlashcards: FlashcardItem[] = [
-  {
-    term: "Phishing",
-    definition:
-      "A scam where attackers send fake emails or messages to trick you into revealing sensitive info.",
-  },
-  {
-    term: "2FA",
-    definition:
-      "Two-Factor Authentication: Adding a second layer of security beyond just a password.",
-  },
-  {
-    term: "Social Engineering",
-    definition:
-      "Manipulating people into giving up confidential information through psychological trickery.",
-  },
-];
 
 const platforms: PlatformItem[] = [
   {
@@ -60,22 +49,40 @@ const platforms: PlatformItem[] = [
 
 /**
  * Social media practice hub page.
- * Displays practice platforms and interactive flashcards.
+ * Displays practice platforms and interactive flashcards from Supabase.
  */
 export default function SocialMediaHub() {
+  const [flashcards, setFlashcards] = useState<FlashcardItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+
+  // Fetch cards from Database on load
+  useEffect(() => {
+    async function fetchFlashcards() {
+      const { data, error } = await supabase
+        .from('flashcards')
+        .select('term, definition');
+
+      if (!error && data) {
+        setFlashcards(data);
+      }
+      setLoading(false);
+    }
+    fetchFlashcards();
+  }, []);
 
   const handleFlipCard = () => {
     setIsFlipped((prev) => !prev);
   };
 
   const handleNextCard = () => {
+    if (flashcards.length === 0) return;
     setIsFlipped(false);
-    setCurrentCard((prev) => (prev + 1) % placeholderFlashcards.length);
+    setCurrentCard((prev) => (prev + 1) % flashcards.length);
   };
 
-  const activeFlashcard = placeholderFlashcards[currentCard];
+  const activeFlashcard = flashcards[currentCard];
 
   return (
     <div
@@ -118,28 +125,37 @@ export default function SocialMediaHub() {
             </h2>
 
             <p className="font-medium" style={{ color: "var(--muted)" }}>
-              Quick-fire flashcards to learn essential cybersecurity jargon.
+              {loading ? "Fetching terms..." : "Quick-fire flashcards to learn essential cybersecurity jargon."}
             </p>
           </div>
 
           <div className="flex flex-col items-center">
-            <Flashcard
-              term={activeFlashcard.term}
-              definition={activeFlashcard.definition}
-              isFlipped={isFlipped}
-              onFlip={handleFlipCard}
-            />
+            {loading ? (
+              <div className="h-64 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7042F4]"></div>
+              </div>
+            ) : activeFlashcard ? (
+              <>
+                <Flashcard
+                  term={activeFlashcard.term}
+                  definition={activeFlashcard.definition}
+                  isFlipped={isFlipped}
+                  onFlip={handleFlipCard}
+                />
 
-            <button
-              onClick={handleNextCard}
-              className="flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-12 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5]"
-            >
-              Next Flashcard →
-            </button>
+                <button
+                  onClick={handleNextCard}
+                  className="mt-8 flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-12 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5]"
+                >
+                  Next Flashcard →
+                </button>
+              </>
+            ) : (
+              <p className="text-gray-400">No flashcards available.</p>
+            )}
           </div>
         </section>
       </main>
-      
     </div>
   );
 }
