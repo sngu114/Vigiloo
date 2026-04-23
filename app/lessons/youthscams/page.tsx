@@ -70,6 +70,17 @@ export default function YouthScamsPage() {
     { id: 2, name: "Web Browsing", icon: "🌐", color: "#0EA5E9", desc: "Master the art of spotting phishing links.", status: "Active", lessons: ["URL Anatomy", "SSL Basics", "Popup Blocker", "Email Phishing", "Script Alerts", "Proxy Defense", "Cyber Master"] },
   ];
 
+  const getVideoSrc = (worldId: number, lessonIdx: number) => {
+    if (lessonIdx !== 0) return null; // Only Lesson 1 for now
+    
+    const links: { [key: number]: string } = {
+      0: "/videos/social_media_lesson1.mp4", 
+      1: "/videos/gaming_safety_lesson1.mp4", 
+      2: "/videos/web_browsing_lesson1.mp4",  
+    };
+    return links[worldId];
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0F172A] font-sans antialiased pb-20 text-gray-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
       <style jsx global>{`
@@ -173,34 +184,51 @@ export default function YouthScamsPage() {
                   </div>
                 </div>
 
-                {/* Refined Lesson Content Area: Balanced & Responsive */}
+                {/* Lesson Content Area - Centered + Sidebar off-center to the right */}
                 {openLesson !== null && (
                   <div className="w-full mt-20 relative animate-in slide-in-from-bottom-10 duration-500 flex justify-center px-4">
                     <div className="flex flex-col lg:flex-row gap-8 items-start relative max-w-[1200px] w-full"> 
                       
-                      {/* Scaled Lesson Container */}
+                      {/* Main Lesson Container (Centered relative to max-w) */}
                       <div className="flex-grow w-full lg:w-[70%] p-6 md:p-10 v-glass-panel border-4 rounded-[2.5rem]" style={{borderColor: worlds[activeWorld].color}}>
                         <div className="flex justify-between items-center mb-6">
                           <h3 className="text-2xl md:text-3xl font-black tracking-tight">Lesson {openLesson + 1}: {worlds[activeWorld].lessons[openLesson]}</h3>
                           <button onClick={() => {setOpenLesson(null); setBrainrotType('none');}} className="text-gray-400 hover:text-white text-2xl font-black">✕</button>
                         </div>
                         
-                        <div className="flex flex-col gap-2"> 
-                          {/* Main Video Box */}
+                        <div className="flex flex-col gap-2 items-center"> 
+                          {/* Main Video Box (Full Width of Container) */}
                           <div className="aspect-video w-full rounded-[2rem] overflow-hidden bg-black border-4 border-gray-800 relative shadow-xl">
-                            <div className="absolute inset-0 flex items-center justify-center flex-col text-gray-500">
-                              <span className="text-6xl mb-4">🎥</span>
-                              <p className="text-lg font-bold uppercase tracking-widest">Main Lesson Content</p>
-                            </div>
+                            {getVideoSrc(activeWorld, openLesson) ? (
+                              <video 
+                                className="w-full h-full object-cover" 
+                                controls 
+                                key={getVideoSrc(activeWorld, openLesson)}
+                              >
+                                <source src={getVideoSrc(activeWorld, openLesson)!} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            ) : (
+                              <div className="absolute inset-0 flex items-center justify-center flex-col text-gray-500">
+                                <span className="text-6xl mb-4">🎥</span>
+                                <p className="text-lg font-bold uppercase tracking-widest">Video Slot: Lesson {openLesson + 1}</p>
+                              </div>
+                            )}
                           </div>
 
-                          {/* Attention Span Video */}
+                          {/* Shrilled Attention Span Video (Constraint size + Centered under) */}
                           {brainrotType !== 'none' && (
-                            <div className="animate-in slide-in-from-top-2 duration-500">
-                              <div className="aspect-video w-full rounded-[2rem] overflow-hidden bg-gray-900 border-4 border-gray-800 relative shadow-lg mb-4">
-                                 <div className="w-full h-full flex items-center justify-center bg-black/40 text-md font-bold text-green-500 text-center">
-                                   {brainrotType === 'subway' ? '🎮 SUBWAY SURFERS ACTIVE' : '⛏️ MINECRAFT PARKOUR ACTIVE'}
-                                 </div>
+                            <div className="w-full max-w-md animate-in slide-in-from-top-2 duration-500 mt-2">
+                              <div className="aspect-video rounded-[1.5rem] overflow-hidden bg-gray-900 border-4 border-gray-800 relative shadow-lg mb-2">
+                                 <video 
+                                    className="w-full h-full object-cover" 
+                                    autoPlay 
+                                    loop 
+                                    muted 
+                                    key={brainrotType}
+                                  >
+                                    <source src={brainrotType === 'subway' ? "/videos/subwaysurfers.mp4" : "/videos/minecraftparkour.mp4"} type="video/mp4" />
+                                  </video>
                               </div>
                               <div className="flex items-center justify-center space-x-2">
                                 <span className="bg-green-500 w-2 h-2 rounded-full animate-ping" />
@@ -213,7 +241,7 @@ export default function YouthScamsPage() {
                         </div>
                       </div>
 
-                      {/* Controls Sidebar */}
+                      {/* Controls Sidebar (Positioned right off-center) */}
                       <div className="w-full lg:w-48 flex flex-col gap-3 h-fit lg:mt-16">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-center lg:text-left px-2">Attention Span Mode</span>
                         <button 
