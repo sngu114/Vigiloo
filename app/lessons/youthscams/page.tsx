@@ -1,9 +1,122 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { createClient } from '@supabase/supabase-js';
 
-// --- SUB-COMPONENTS ---
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    auth: {
+      persistSession: false // This forces a fresh connection
+    }
+  }
+);
+
+const QuizModal = ({ onClose }: { onClose: () => void }) => {
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchQuiz() {
+      try {
+        const { data, error } = await supabase
+          .from('roblox_assessment')
+          .select('*');
+        
+        if (error) throw error;
+        if (data) setQuestions(data);
+      } catch (err) {
+        console.error("Error fetching quiz:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchQuiz();
+  }, []);
+
+  if (loading) return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] text-white font-black uppercase tracking-widest">
+      Loading Quest...
+    </div>
+  );
+
+  // Safety check: If questions failed to load or are empty
+  if (questions.length === 0 || !questions[currentIndex]) return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] text-white p-6 text-center">
+      <div>
+        <p className="font-bold mb-4">No assessment data found.</p>
+        <button onClick={onClose} className="text-[#7042F4] font-black uppercase tracking-widest underline">Return to Map</button>
+      </div>
+    </div>
+  );
+
+  const handleAnswer = (selectedOption: string) => {
+    if (selectedOption === questions[currentIndex].correct_answer) {
+      setScore(score + 1);
+    }
+    if (currentIndex + 1 < questions.length) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setShowResults(true);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/90 backdrop-blur-xl flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300">
+      <div className="bg-white dark:bg-[#0F172A] w-full max-w-2xl rounded-[3rem] p-8 md:p-12 border-4 border-[#7042F4] relative shadow-[0_0_50px_rgba(112,66,244,0.3)]">
+        <button onClick={onClose} className="absolute top-8 right-8 text-gray-400 hover:text-white text-xl font-black transition-colors">✕</button>
+
+        {!showResults ? (
+          <div className="animate-in slide-in-from-right-5 duration-300">
+            <div className="mb-10">
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7042F4]">Question {currentIndex + 1} / {questions.length}</span>
+                <span className="text-[10px] font-black text-gray-500">{Math.round(((currentIndex) / questions.length) * 100)}% Complete</span>
+              </div>
+              <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div className="bg-[#7042F4] h-full transition-all duration-500" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }} />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-black mt-8 leading-tight tracking-tight">{questions[currentIndex].question_text}</h2>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {questions[currentIndex].options.map((option: string, i: number) => (
+                <button 
+                  key={i}
+                  onClick={() => handleAnswer(option)}
+                  className="group relative p-5 text-left rounded-2xl border-2 border-gray-100 dark:border-gray-800 hover:border-[#7042F4] hover:bg-[#7042F4]/5 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 group-hover:bg-[#7042F4] group-hover:text-white flex items-center justify-center text-xs font-black transition-colors">
+                      {String.fromCharCode(65 + i)}
+                    </span>
+                    <span className="font-bold text-gray-700 dark:text-gray-200">{option}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-6 animate-in zoom-in-95 duration-500">
+            <div className="text-8xl mb-6">🏆</div>
+            <h2 className="text-5xl font-black mb-2">{score} / {questions.length}</h2>
+            <p className="text-gray-500 font-bold uppercase tracking-widest mb-10">Assessment Complete</p>
+            <div className="bg-[#7042F4]/10 rounded-2xl p-6 mb-10 border border-[#7042F4]/20">
+              <p className="text-[#7042F4] font-black text-sm uppercase tracking-widest">+ {score * 10} XP Earned</p>
+            </div>
+            <button onClick={onClose} className="w-full py-5 bg-[#7042F4] text-white rounded-2xl font-black uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+              Return to Map
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const XPTracker = () => (
   <div className="flex-grow w-full">
@@ -34,13 +147,12 @@ const MiniLeaderboard = ({ title, users }: { title: string, users: any[] }) => (
   </div>
 );
 
-// --- MAIN PAGE ---
-
 export default function YouthScamsPage() {
   const [activeWorld, setActiveWorld] = useState(1);
   const [isExploring, setIsExploring] = useState(false);
   const [openLesson, setOpenLesson] = useState<number | null>(null);
   const [brainrotType, setBrainrotType] = useState<'none' | 'subway' | 'minecraft'>('none');
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -66,16 +178,16 @@ export default function YouthScamsPage() {
 
   const worlds = [
     { id: 0, name: "Social Media", icon: "📱", color: "#E11D48", desc: "Identify fake giveaways and verify influencers.", status: "Active", lessons: ["Fake Verified", "The Like Trap", "DM Phishing", "Bot Swarms", "Ad Camouflage", "Data Mining", "The Algorithm Boss"] },
-    { id: 1, name: "Gaming Safety", icon: "🎮", color: "#7042F4", desc: "Protect your accounts and digital currency.", status: "Active", lessons: ["Robux Scam 101", "Chat Moderation", "Account Shield", "Currency Scams", "Marketplace VPN", "Trade Bots", "Vault Guardian"] },
+    { id: 1, name: "Gaming Safety", icon: "🎮", color: "#7042F4", desc: "Protect your accounts and digital currency.", status: "Active", lessons: ["Roblox Scams ", "Chat Moderation", "Account Shield", "Currency Scams", "Marketplace VPN", "Trade Bots", "Vault Guardian"] },
     { id: 2, name: "Web Browsing", icon: "🌐", color: "#0EA5E9", desc: "Master the art of spotting phishing links.", status: "Active", lessons: ["URL Anatomy", "SSL Basics", "Popup Blocker", "Email Phishing", "Script Alerts", "Proxy Defense", "Cyber Master"] },
   ];
 
   const getVideoSrc = (worldId: number, lessonIdx: number) => {
-    if (lessonIdx !== 0) return null; // Only Lesson 1 for now
+    if (lessonIdx !== 0) return null; 
     
     const links: { [key: number]: string } = {
       0: "/videos/social_media_lesson1.mp4", 
-      1: "/videos/gaming_safety_lesson1.mp4", 
+      1: "/videos/robloxscam_lesson1.mp4", 
       2: "/videos/web_browsing_lesson1.mp4",  
     };
     return links[worldId];
@@ -89,6 +201,8 @@ export default function YouthScamsPage() {
         .grab-cursor { cursor: grab; }
         .grab-cursor:active { cursor: grabbing; }
       `}</style>
+
+      {isQuizOpen && <QuizModal onClose={() => setIsQuizOpen(false)} />}
 
       <div className="max-w-[1400px] mx-auto px-6 py-10">
         <div className="flex flex-col space-y-8 relative z-10">
@@ -184,12 +298,10 @@ export default function YouthScamsPage() {
                   </div>
                 </div>
 
-                {/* Lesson Content Area - Centered + Sidebar off-center to the right */}
                 {openLesson !== null && (
                   <div className="w-full mt-20 relative animate-in slide-in-from-bottom-10 duration-500 flex justify-center px-4">
                     <div className="flex flex-col lg:flex-row gap-8 items-start relative max-w-[1200px] w-full"> 
                       
-                      {/* Main Lesson Container (Centered relative to max-w) */}
                       <div className="flex-grow w-full lg:w-[70%] p-6 md:p-10 v-glass-panel border-4 rounded-[2.5rem]" style={{borderColor: worlds[activeWorld].color}}>
                         <div className="flex justify-between items-center mb-6">
                           <h3 className="text-2xl md:text-3xl font-black tracking-tight">Lesson {openLesson + 1}: {worlds[activeWorld].lessons[openLesson]}</h3>
@@ -197,7 +309,6 @@ export default function YouthScamsPage() {
                         </div>
                         
                         <div className="flex flex-col gap-2 items-center"> 
-                          {/* Main Video Box (Full Width of Container) */}
                           <div className="aspect-video w-full rounded-[2rem] overflow-hidden bg-black border-4 border-gray-800 relative shadow-xl">
                             {getVideoSrc(activeWorld, openLesson) ? (
                               <video 
@@ -206,7 +317,6 @@ export default function YouthScamsPage() {
                                 key={getVideoSrc(activeWorld, openLesson)}
                               >
                                 <source src={getVideoSrc(activeWorld, openLesson)!} type="video/mp4" />
-                                Your browser does not support the video tag.
                               </video>
                             ) : (
                               <div className="absolute inset-0 flex items-center justify-center flex-col text-gray-500">
@@ -216,7 +326,6 @@ export default function YouthScamsPage() {
                             )}
                           </div>
 
-                          {/* Shrilled Attention Span Video (Constraint size + Centered under) */}
                           {brainrotType !== 'none' && (
                             <div className="w-full max-w-md animate-in slide-in-from-top-2 duration-500 mt-2">
                               <div className="aspect-video rounded-[1.5rem] overflow-hidden bg-gray-900 border-4 border-gray-800 relative shadow-lg mb-2">
@@ -241,7 +350,6 @@ export default function YouthScamsPage() {
                         </div>
                       </div>
 
-                      {/* Controls Sidebar (Positioned right off-center) */}
                       <div className="w-full lg:w-48 flex flex-col gap-3 h-fit lg:mt-16">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-center lg:text-left px-2">Attention Span Mode</span>
                         <button 
@@ -255,6 +363,15 @@ export default function YouthScamsPage() {
                           className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'minecraft' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                         >
                           Minecraft Parkour
+                        </button>
+
+                        <div className="h-[2px] bg-gray-100 dark:bg-gray-800 my-2" />
+
+                        <button 
+                          onClick={() => setIsQuizOpen(true)}
+                          className="w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg bg-[#7042F4] text-white border-2 border-white/20 hover:scale-105 transition-all"
+                        >
+                          Take Assessment
                         </button>
                       </div>
 
