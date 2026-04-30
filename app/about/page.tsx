@@ -40,7 +40,7 @@ export default function AboutPage() {
       github: "https://github.com/snunoz", 
       linkedin: "https://linkedin.com/in/",
       image: "/sergio.jpg",
-      darkModeImage: "/sergioDarkMode.png"
+      darkModeImage: "/sergio.gif"
     },
     { 
       name: "Caleb Zeringue", 
@@ -50,7 +50,7 @@ export default function AboutPage() {
       github: "https://github.com/Yeleb", 
       linkedin: "https://linkedin.com/in/",
       image: "/caleb.PNG",
-      darkModeImage: "/calebDarkMode.png"
+      darkModeImage: "/caleb.PNG"
     },
     { 
       name: "Marcus Hudson", 
@@ -59,8 +59,8 @@ export default function AboutPage() {
       bio: "I connect Vigiloo to the world.",
       github: "https://github.com/mmarcvss", 
       linkedin: "https://linkedin.com/in/",
-      image: "/marcus.png",
-      darkModeImage: "/marcusDarkMode.png"
+      image: "/marcus.jpg",
+      darkModeImage: "/marcus.jpg"
     },
   ];
 
