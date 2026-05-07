@@ -9,12 +9,15 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   {
     auth: {
-      persistSession: false // This forces a fresh connection
+      persistSession: false 
     }
   }
 );
 
-const QuizModal = ({ onClose }: { onClose: () => void }) => {
+// UPDATE THIS URL with your actual project ID from Supabase
+const VIDEO_BASE_URL = "https://nhkarhhrbyenusvisdzj.supabase.co/storage/v1/object/public/videos";
+
+const QuizModal = ({ onClose, tableName }: { onClose: () => void, tableName: string }) => {
   const [questions, setQuestions] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -25,7 +28,7 @@ const QuizModal = ({ onClose }: { onClose: () => void }) => {
     async function fetchQuiz() {
       try {
         const { data, error } = await supabase
-          .from('roblox_assessment')
+          .from(tableName)
           .select('*');
         
         if (error) throw error;
@@ -37,7 +40,7 @@ const QuizModal = ({ onClose }: { onClose: () => void }) => {
       }
     }
     fetchQuiz();
-  }, []);
+  }, [tableName]);
 
   if (loading) return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] text-white font-black uppercase tracking-widest">
@@ -45,11 +48,10 @@ const QuizModal = ({ onClose }: { onClose: () => void }) => {
     </div>
   );
 
-  // Safety check: If questions failed to load or are empty
   if (questions.length === 0 || !questions[currentIndex]) return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] text-white p-6 text-center">
       <div>
-        <p className="font-bold mb-4">No assessment data found.</p>
+        <p className="font-bold mb-4">No assessment data found in {tableName}.</p>
         <button onClick={onClose} className="text-[#7042F4] font-black uppercase tracking-widest underline">Return to Map</button>
       </div>
     </div>
@@ -151,7 +153,7 @@ export default function YouthScamsPage() {
   const [activeWorld, setActiveWorld] = useState(1);
   const [isExploring, setIsExploring] = useState(false);
   const [openLesson, setOpenLesson] = useState<number | null>(null);
-  const [brainrotType, setBrainrotType] = useState<'none' | 'subway' | 'minecraft'>('none');
+  const [brainrotType, setBrainrotType] = useState<'none' | 'subway' | 'minecraft' | 'fruit' | 'familyguy'>('none');
   const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -177,20 +179,34 @@ export default function YouthScamsPage() {
   };
 
   const worlds = [
-    { id: 0, name: "Social Media", icon: "📱", color: "#E11D48", desc: "Identify fake giveaways and verify influencers.", status: "Active", lessons: ["Fake Verified", "The Like Trap", "DM Phishing", "Bot Swarms", "Ad Camouflage", "Data Mining", "The Algorithm Boss"] },
-    { id: 1, name: "Gaming Safety", icon: "🎮", color: "#7042F4", desc: "Protect your accounts and digital currency.", status: "Active", lessons: ["Roblox Scams ", "Chat Moderation", "Account Shield", "Currency Scams", "Marketplace VPN", "Trade Bots", "Vault Guardian"] },
-    { id: 2, name: "Web Browsing", icon: "🌐", color: "#0EA5E9", desc: "Master the art of spotting phishing links.", status: "Active", lessons: ["URL Anatomy", "SSL Basics", "Popup Blocker", "Email Phishing", "Script Alerts", "Proxy Defense", "Cyber Master"] },
+    { id: 0, name: "Social Media", icon: "📱", color: "#E11D48", desc: "Identify fake giveaways and verify influencers.", status: "Active", lessons: ["Getting Started", "The Like Trap", "DM Phishing", "Bot Swarms", "Ad Camouflage", "Data Mining", "The Algorithm Boss"], dbTable: "social_media_getting_started" },
+    { id: 1, name: "Gaming Safety", icon: "🎮", color: "#7042F4", desc: "Protect your accounts and digital currency.", status: "Active", lessons: ["Roblox Scams", "Chat Moderation", "Account Shield", "Currency Scams", "Marketplace VPN", "Trade Bots", "Vault Guardian"], dbTable: "roblox_assessment" },
+    { id: 2, name: "Web Browsing", icon: "🌐", color: "#0EA5E9", desc: "Master the art of spotting phishing links.", status: "Active", lessons: ["Getting Started", "Fake Ads", "Popup Blocker", "Email Phishing", "Script Alerts", "Proxy Defense", "Cyber Master"], dbTable: "web_browsing_assessment" },
   ];
 
   const getVideoSrc = (worldId: number, lessonIdx: number) => {
-    if (lessonIdx !== 0) return null; 
-    
-    const links: { [key: number]: string } = {
-      0: "/videos/social_media_lesson1.mp4", 
-      1: "/videos/robloxscam_lesson1.mp4", 
-      2: "/videos/web_browsing_lesson1.mp4",  
+    const videoFiles: { [key: string]: string } = {
+      "0-0": "social_media_gettingstarted.mp4",
+      "0-1": "social_media_lesson2.mp4", 
+      "1-0": "robloxscam_lesson1.mp4",
+      "1-1": "robloxscam_lesson2.mp4", 
+      "2-0": "web_browsing_lesson1.mp4",
+      "2-1": "web_browsing_lesson2.mp4",
     };
-    return links[worldId];
+    const fileName = videoFiles[`${worldId}-${lessonIdx}`];
+    return fileName ? `${VIDEO_BASE_URL}/${fileName}` : null;
+  };
+
+  const getVideoCredit = (worldId: number, lessonIdx: number) => {
+    const credits: { [key: string]: string } = {
+      "0-0": "Google For Education",
+      "0-1": "YouTuberName2",
+      "1-0": "Callon",
+      "1-1": "YouTuberName4",
+      "2-0": "YouTuberName5",
+      "2-1": "YouTuberName6",
+    };
+    return credits[`${worldId}-${lessonIdx}`] || "Unknown Creator";
   };
 
   return (
@@ -202,7 +218,12 @@ export default function YouthScamsPage() {
         .grab-cursor:active { cursor: grabbing; }
       `}</style>
 
-      {isQuizOpen && <QuizModal onClose={() => setIsQuizOpen(false)} />}
+      {isQuizOpen && (
+        <QuizModal 
+          tableName={worlds[activeWorld].dbTable} 
+          onClose={() => setIsQuizOpen(false)} 
+        />
+      )}
 
       <div className="max-w-[1400px] mx-auto px-6 py-10">
         <div className="flex flex-col space-y-8 relative z-10">
@@ -274,7 +295,7 @@ export default function YouthScamsPage() {
 
                     {worlds[activeWorld].lessons.map((lesson, idx) => {
                       const positions = ["-mt-32", "mt-32", "-mt-16", "mt-16", "-mt-24", "mt-24", "mt-0"];
-                      const isCurrent = idx === 0;
+                      const isCurrent = idx === 0 || idx === 1;
                       return (
                         <div key={idx} className={`relative z-10 flex flex-col items-center group transition-all duration-700 ${positions[idx]}`}>
                           <div className="flex space-x-1 mb-2">
@@ -326,8 +347,14 @@ export default function YouthScamsPage() {
                             )}
                           </div>
 
+                          {getVideoSrc(activeWorld, openLesson) && (
+                            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mt-2">
+                              Credit: <span className="text-[#7042F4]">{getVideoCredit(activeWorld, openLesson)}</span>
+                            </p>
+                          )}
+
                           {brainrotType !== 'none' && (
-                            <div className="w-full max-w-md animate-in slide-in-from-top-2 duration-500 mt-2">
+                            <div className="w-full max-w-md animate-in slide-in-from-top-2 duration-500 mt-4">
                               <div className="aspect-video rounded-[1.5rem] overflow-hidden bg-gray-900 border-4 border-gray-800 relative shadow-lg mb-2">
                                  <video 
                                     className="w-full h-full object-cover" 
@@ -336,13 +363,22 @@ export default function YouthScamsPage() {
                                     muted 
                                     key={brainrotType}
                                   >
-                                    <source src={brainrotType === 'subway' ? "/videos/subwaysurfers.mp4" : "/videos/minecraftparkour.mp4"} type="video/mp4" />
+                                    <source 
+                                      src={`${VIDEO_BASE_URL}/${
+                                        brainrotType === 'subway' ? 'subwaysurfers' : 
+                                        brainrotType === 'minecraft' ? 'minecraftparkour' :
+                                        brainrotType === 'fruit' ? 'fruitsensory' : 'familyguy'
+                                      }.mp4`} 
+                                      type="video/mp4" 
+                                    />
                                   </video>
                               </div>
                               <div className="flex items-center justify-center space-x-2">
                                 <span className="bg-green-500 w-2 h-2 rounded-full animate-ping" />
                                 <span className="text-[10px] font-black uppercase tracking-widest text-green-500">
-                                  {brainrotType === 'subway' ? 'Subway Surfers Active' : 'Minecraft Parkour Active'}
+                                  {brainrotType === 'subway' ? 'Subway Surfers Active' : 
+                                   brainrotType === 'minecraft' ? 'Minecraft Parkour Active' :
+                                   brainrotType === 'fruit' ? 'Fruit Sensory Active' : 'Family Guy Active'}
                                 </span>
                               </div>
                             </div>
@@ -363,6 +399,20 @@ export default function YouthScamsPage() {
                           className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'minecraft' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                         >
                           Minecraft Parkour
+                        </button>
+                        
+                        <button 
+                          onClick={() => setBrainrotType(brainrotType === 'fruit' ? 'none' : 'fruit')}
+                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'fruit' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                        >
+                          Fruit Sensory
+                        </button>
+
+                        <button 
+                          onClick={() => setBrainrotType(brainrotType === 'familyguy' ? 'none' : 'familyguy')}
+                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'familyguy' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                        >
+                          Family Guy
                         </button>
 
                         <div className="h-[2px] bg-gray-100 dark:bg-gray-800 my-2" />
