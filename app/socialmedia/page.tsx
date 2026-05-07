@@ -2,203 +2,199 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
+import PracticeCard from "@/components/PracticeCard";
+import Flashcard from "@/components/Flashcard";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-interface GameTile {
-  id: string;
-  content: string;
-  type: 'term' | 'def';
-  pairId: string;
-}
+type FlashcardItem = {
+  term: string;
+  definition: string;
+};
 
-export default function MatchingGame() {
+type PlatformItem = {
+  name: string;
+  imageUrl: string;
+  description: string;
+  href: string;
+};
+
+const platforms: PlatformItem[] = [
+  {
+    name: "Instagram",
+    imageUrl: "/instagram.png",
+    description: "Practice avoiding common influencer scams and fake giveaway alerts.",
+    href: "/socialmedia/instagram",
+  },
+  {
+    name: "Snapchat",
+    imageUrl: "/snapchat.png",
+    description: "Identify vanishing message scams and unauthorized login attempts.",
+    href: "/socialmedia/snapchat",
+  },
+  {
+    name: "TikTok",
+    imageUrl: "/tiktok.png",
+    description: "Identify fake investment schemes and fraudulent brand partnerships.",
+    href: "/socialmedia/tiktok",
+  },
+];
+
+export default function SocialMediaHub() {
+  const [flashcards, setFlashcards] = useState<FlashcardItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [tiles, setTiles] = useState<GameTile[]>([]);
-  const [firstSelection, setFirstSelection] = useState<GameTile | null>(null);
-  const [secondSelection, setSecondSelection] = useState<GameTile | null>(null);
-  const [matchedIds, setMatchedIds] = useState<string[]>([]);
-  
-  // Stats States
-  const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(0);
+  const [currentCard, setCurrentCard] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [mode, setMode] = useState<'term' | 'definition'>('term');
 
-  const initGame = async () => {
-    setLoading(true);
-    setMatchedIds([]);
-    setFirstSelection(null);
-    setSecondSelection(null);
-
-    // Sync best streak from local storage
-    const savedBest = localStorage.getItem("matching-best-streak");
-    if (savedBest) setBestStreak(parseInt(savedBest));
-    
-    const { data } = await supabase.from('flashcards').select('term, definition').limit(40);
-    
-    if (data && data.length > 0) {
-      const selectedCards = [...data].sort(() => Math.random() - 0.5).slice(0, 6);
-      const gameTiles: GameTile[] = [
-        ...selectedCards.map(item => ({
-          id: `t-${item.term}`,
-          content: item.term,
-          type: 'term' as const,
-          pairId: item.term.trim()
-        })),
-        ...selectedCards.map(item => ({
-          id: `d-${item.term}`,
-          content: item.definition,
-          type: 'def' as const,
-          pairId: item.term.trim()
-        }))
-      ];
-      setTiles(gameTiles.sort(() => Math.random() - 0.5));
+  useEffect(() => {
+    async function fetchFlashcards() {
+      const { data, error } = await supabase
+        .from('flashcards')
+        .select('term, definition');
+      if (!error && data) {
+        setFlashcards(data);
+      }
+      setLoading(false);
     }
-    setLoading(false);
+    fetchFlashcards();
+  }, []);
+
+  const handleFlipCard = () => {
+    setIsFlipped((prev) => !prev);
   };
 
-  useEffect(() => { initGame(); }, []);
-
-  const handleTileClick = (tile: GameTile) => {
-    if (secondSelection || matchedIds.includes(tile.pairId)) return;
-
-    // FIX: Deselect if clicking the same card twice
-    if (firstSelection?.id === tile.id) {
-      setFirstSelection(null);
-      return;
-    }
-
-    if (!firstSelection) {
-      setFirstSelection(tile);
-      return;
-    }
-
-    setSecondSelection(tile);
-
-    // Match logic
-    if (firstSelection.pairId === tile.pairId && firstSelection.type !== tile.type) {
-      setTimeout(() => {
-        const newMatches = [...matchedIds, tile.pairId];
-        setMatchedIds(newMatches);
-        
-        // Handle Win Condition
-        if (newMatches.length === 6) {
-          const newStreak = streak + 1;
-          setStreak(newStreak);
-          if (newStreak > bestStreak) {
-            setBestStreak(newStreak);
-            localStorage.setItem("matching-best-streak", newStreak.toString());
-          }
-        }
-        
-        setFirstSelection(null);
-        setSecondSelection(null);
-      }, 400); 
-    } else {
-      setTimeout(() => {
-        setFirstSelection(null);
-        setSecondSelection(null);
-      }, 800);
-    }
+  const handleNextCard = () => {
+    if (flashcards.length === 0) return;
+    setIsFlipped(false);
+    setCurrentCard((prev) => (prev + 1) % flashcards.length);
   };
 
-  const isGameOver = tiles.length > 0 && matchedIds.length === 6;
+  const handleModeToggle = (newMode: 'term' | 'definition') => {
+    setMode(newMode);
+    setIsFlipped(false);
+  };
+
+  const activeFlashcard = flashcards[currentCard];
 
   return (
-    <div className="min-h-screen bg-transparent font-sans antialiased" style={{ color: "var(--foreground)" }}>
+    <div
+      className="min-h-screen bg-transparent font-sans antialiased"
+      style={{ color: "var(--foreground)" }}
+    >
       <main className="relative z-10 mx-auto max-w-6xl px-6 py-16">
-        
         <div className="mb-4 text-sm font-bold uppercase tracking-widest text-gray-400">
-          Practice / <span className="text-[#7042F4]">Matching Game</span>
+          Dashboard / <span className="text-[#7042F4]">Practice</span>
         </div>
 
-        <h1 className="mb-4 text-5xl font-black uppercase" style={{ color: "var(--foreground)" }}>
-          Terminology Match
+        <h1 className="mb-4 text-5xl font-black" style={{ color: "var(--foreground)" }}>
+          Social Media Practice
         </h1>
 
-        {isGameOver ? (
-          /* --- Victory State with Leaderboard --- */
-          <div className="flex flex-col items-center justify-center py-16 bg-white rounded-[3rem] border border-gray-100 shadow-xl text-center px-6 animate-in fade-in zoom-in duration-500">
-            <div className="text-6xl mb-4">🔥</div>
-            <h2 className="text-4xl font-black mb-2 text-gray-900 uppercase">Streak: {streak}</h2>
-            <p className="text-gray-500 font-medium mb-8 tracking-widest text-xs">Personal Best: {bestStreak}</p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button onClick={initGame} className="rounded-2xl bg-[#7042F4] px-12 py-5 text-lg font-black text-white hover:bg-[#5B34E5] transition-all active:scale-95 shadow-lg shadow-[#7042F4]/20">
-                NEXT ROUND
-              </button>
-            </div>
+        <p className="mb-12 max-w-2xl text-lg font-medium" style={{ color: "var(--muted)" }}>
+          Select a platform to practice identifying and avoiding common social
+          media scams in a safe, simulated environment.
+        </p>
 
-            {/* Global Styled Leaderboard */}
-            <div className="w-full max-w-md border-t pt-10" style={{ borderColor: "var(--card-border)" }}>
-                <span className="text-[10px] font-bold text-[#7042F4] tracking-[0.2em] uppercase mb-6 block">Global Top Streaks</span>
-                <div className="space-y-3 text-left">
-                    <div className="flex justify-between items-center p-5 rounded-2xl bg-[#F5F3FF] border border-[#7042F4]/20">
-                        <span className="font-bold text-gray-900">1. You</span>
-                        <span className="font-black text-[#7042F4]">{bestStreak} Wins</span>
-                    </div>
-                    <div className="flex justify-between items-center p-5 rounded-2xl bg-white border border-gray-100 opacity-60">
-                        <span className="font-bold text-gray-600">2. RootAdmin_X</span>
-                        <span className="font-black text-gray-400">14 Wins</span>
-                    </div>
-                </div>
-            </div>
-          </div>
-        ) : (
-          /* --- Active Game State --- */
-          <>
-            <div className="mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <p className="max-w-xl text-lg font-medium" style={{ color: "var(--muted)" }}>
-                Current Streak: <span className="text-[#7042F4] font-black">{streak}</span>
-              </p>
-              <div className="bg-white border border-gray-200 px-6 py-3 rounded-2xl shadow-sm font-bold text-[#7042F4]">
-                Remaining: {tiles.length - (matchedIds.length * 2)}
-              </div>
-            </div>
+        <div className="mb-24 grid grid-cols-1 gap-8 md:grid-cols-3">
+          {platforms.map((platform) => (
+            <PracticeCard
+              key={platform.name}
+              name={platform.name}
+              imageUrl={platform.imageUrl}
+              description={platform.description}
+              href={platform.href}
+            />
+          ))}
+        </div>
 
-            {loading ? (
-              <div className="flex flex-col items-center justify-center py-24">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7042F4]"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {tiles.map((tile) => {
-                  const isSelected = firstSelection?.id === tile.id || secondSelection?.id === tile.id;
-                  const isMatched = matchedIds.includes(tile.pairId);
+        <section className="border-t pt-20" style={{ borderColor: "var(--card-border)" }}>
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-4xl font-black" style={{ color: "var(--foreground)" }}>
+              Master the Terms
+            </h2>
+            <p className="font-medium mb-6" style={{ color: "var(--muted)" }}>
+              {loading ? "Fetching terms..." : "Quick-fire flashcards to learn essential cybersecurity jargon."}
+            </p>
 
-                  return (
-                    <div
-                      key={tile.id}
-                      onClick={() => handleTileClick(tile)}
-                      className={`
-                        min-h-[140px] md:min-h-[180px] p-4 md:p-6 rounded-[2rem] border-2 flex items-center justify-center text-center cursor-pointer transition-all duration-300
-                        ${isMatched ? 'opacity-0 pointer-events-none scale-0' : 'opacity-100 scale-100 shadow-sm hover:border-[#7042F4]'}
-                      `}
-                      style={{
-                        backgroundColor: isSelected ? '#F5F3FF' : 'white',
-                        borderColor: isSelected ? '#7042F4' : 'var(--card-border)',
-                        transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                        boxShadow: isSelected ? '0 10px 25px -5px rgba(112, 66, 244, 0.3)' : ''
-                      }}
-                    >
-                      <span className={`leading-tight ${tile.type === 'term' ? 'text-gray-900 font-black text-base md:text-xl' : 'text-gray-500 text-xs md:text-sm font-medium'}`}>
-                        {tile.content}
-                      </span>
-                    </div>
-                  );
-                })}
+            {/* Mode Toggle */}
+            {!loading && activeFlashcard && (
+              <div className="inline-flex rounded-2xl border p-1" style={{ borderColor: "var(--card-border)", background: "var(--card)" }}>
+                <button
+                  onClick={() => handleModeToggle('term')}
+                  className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+                    mode === 'term'
+                      ? 'bg-[#7042F4] text-white shadow-md'
+                      : 'text-gray-400 hover:text-[#7042F4]'
+                  }`}
+                >
+                  Term → Definition
+                </button>
+                <button
+                  onClick={() => handleModeToggle('definition')}
+                  className={`px-6 py-2 rounded-xl text-sm font-bold transition-all ${
+                    mode === 'definition'
+                      ? 'bg-[#7042F4] text-white shadow-md'
+                      : 'text-gray-400 hover:text-[#7042F4]'
+                  }`}
+                >
+                  Definition → Term
+                </button>
               </div>
             )}
+          </div>
 
-            <div className="mt-12 text-center">
-              <a href="/socialmedia" className="inline-block text-gray-400 font-bold hover:text-[#7042F4] transition-colors text-sm uppercase tracking-widest py-4">
-                ← Back to Practice Hub
-              </a>
+          <div className="flex flex-col items-center">
+            {loading ? (
+              <div className="h-64 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7042F4]"></div>
+              </div>
+            ) : activeFlashcard ? (
+              <>
+                <Flashcard
+                  term={mode === 'term' ? activeFlashcard.term : activeFlashcard.definition}
+                  definition={mode === 'term' ? activeFlashcard.definition : activeFlashcard.term}
+                  isFlipped={isFlipped}
+                  onFlip={handleFlipCard}
+                />
+
+                <button
+                  onClick={handleNextCard}
+                  className="mt-8 flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-12 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5]"
+                >
+                  Next Flashcard →
+                </button>
+              </>
+            ) : (
+              <p className="text-gray-400">No flashcards available.</p>
+            )}
+          </div>
+        </section>
+        <section className="border-t pt-20 mt-20" style={{ borderColor: "var(--card-border)" }}>
+          <div className="bg-white rounded-[3rem] p-8 md:p-12 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-xl text-center md:text-left">
+              <span className="text-[10px] font-bold text-[#7042F4] tracking-[0.2em] uppercase mb-4 block">
+                New Challenge
+              </span>
+              <h2 className="text-4xl font-black mb-4 text-gray-900 leading-tight">
+                TERMINOLOGY MATCH
+              </h2>
+              <p className="text-gray-500 font-medium leading-relaxed">
+                Put your memory to the test. Match terms to their definitions as fast as you can.
+              </p>
             </div>
-          </>
-        )}
+            
+            <a 
+              href="/socialmedia/game"
+              className="whitespace-nowrap flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-10 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5] hover:scale-105 active:scale-95"
+            >
+              🎮 Start Game
+            </a>
+          </div>
+      </section>
       </main>
     </div>
   );
