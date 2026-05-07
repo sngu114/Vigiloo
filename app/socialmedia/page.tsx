@@ -173,6 +173,28 @@ export default function SocialMediaHub() {
             )}
           </div>
         </section>
+        <section className="border-t pt-20 mt-20" style={{ borderColor: "var(--card-border)" }}>
+          <div className="bg-white rounded-[3rem] p-8 md:p-12 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-xl text-center md:text-left">
+              <span className="text-[10px] font-bold text-[#7042F4] tracking-[0.2em] uppercase mb-4 block">
+                New Challenge
+              </span>
+              <h2 className="text-4xl font-black mb-4 text-gray-900 leading-tight">
+                TERMINOLOGY MATCH
+              </h2>
+              <p className="text-gray-500 font-medium leading-relaxed">
+                Put your memory to the test. Match terms to their definitions as fast as you can.
+              </p>
+            </div>
+            
+            <a 
+              href="/socialmedia/game"
+              className="whitespace-nowrap flex cursor-pointer items-center gap-3 rounded-2xl bg-[#7042F4] px-10 py-5 text-lg font-black text-white shadow-xl shadow-[#7042F4]/20 transition-all hover:bg-[#5B34E5] hover:scale-105 active:scale-95"
+            >
+              🎮 Start Game
+            </a>
+          </div>
+      </section>
       </main>
     </div>
   );
