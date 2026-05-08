@@ -17,7 +17,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    joinedDate: "March 2026",
+    joinedDate: "",
     bio: "Customize your bio to fit you!",
     password: "",
     recoveryEmail: "recovery@example.com",
@@ -36,6 +36,13 @@ export default function ProfilePage() {
           email: authUser.email ?? "",
           recoveryEmail: authUser.email ?? "",
           name: authUser.user_metadata?.full_name ?? "User",
+          joinedDate: new Date(authUser.created_at).toLocaleDateString(
+            "en-US",
+            {
+              month: "long",
+              year: "numeric",
+            },
+          ),
         }));
       }
     };
