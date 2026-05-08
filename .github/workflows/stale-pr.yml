@@ -1,16 +1,17 @@
 name: Close Stale Pull Requests
 
 on:
-   schedule:
-     - cron: '0 0 * * *'
+  schedule:
+    - cron: "0 1 * * *"
 
 jobs:
   stale:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/stale@v8
+      - uses: actions/stale@v9
         with:
-          stale-pr-message: "This pull request has been inactive for 14 days and will be closed."
-          days-before-stale: 14
-          days-before-close: 1
+          stale-pr-message: "This PR has been marked as stale due to inactivity."
+          close-pr-message: "Closing stale PR after 14 days of inactivity."
+          days-before-pr-stale: 7
+          days-before-pr-close: 14
