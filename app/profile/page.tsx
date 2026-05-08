@@ -4,14 +4,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ThemeToggle } from '@/components/ThemeToggle'; // Import the toggle
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { supabase } from '@/lib/supabase';
 
 export default function ProfilePage() {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPrivacy, setIsEditingPrivacy] = useState(false);
   const [activeTab, setActiveTab] = useState('Account');
-  
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   const [user, setUser] = useState({
     name: "Mooyah Burger",
     email: "TaiChen@example.com",
@@ -31,6 +33,21 @@ export default function ProfilePage() {
   const toggleCheckbox = (name: string) => {
     if (!isEditingPrivacy) return;
     setUser((prev: any) => ({ ...prev, [name]: !prev[name] }));
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      return;
+    }
+
+    const { error } = await supabase.rpc('delete_user');
+    if (error) {
+      console.error(error);
+    } else {
+      await supabase.auth.signOut();
+      router.push('/');
+    }
   };
 
   const menuItems = [
@@ -55,6 +72,7 @@ export default function ProfilePage() {
       setActiveTab(name);
       setIsEditing(false);
       setIsEditingPrivacy(false);
+      setConfirmDelete(false);
     }
   };
 
@@ -62,7 +80,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-transparent font-sans antialiased">
       <div className="max-w-6xl mx-auto py-12 px-6 relative z-10">
         <div className="flex flex-col md:flex-row gap-12">
-          
+
           {/* LEFT SIDE: Sidebar Navigation */}
           <aside className="w-full md:w-64 space-y-2">
             <h2 className="text-xs font-black uppercase tracking-widest text-gray-400 px-4 mb-4">Dashboard</h2>
@@ -71,9 +89,9 @@ export default function ProfilePage() {
                 key={item.name}
                 onClick={() => handleNavigation(item.name)}
                 className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 ease-in-out cursor-pointer ${
-                  activeTab === item.name 
-                    ? 'bg-[#7042F4] text-white shadow-lg shadow-[#7042F4]/20 scale-[1.02]' 
-                    : 'text-[#7042F4] hover:bg-[#7042F4]/5' 
+                  activeTab === item.name
+                    ? 'bg-[#7042F4] text-white shadow-lg shadow-[#7042F4]/20 scale-[1.02]'
+                    : 'text-[#7042F4] hover:bg-[#7042F4]/5'
                 }`}
               >
                 {item.name}
@@ -84,7 +102,7 @@ export default function ProfilePage() {
           {/* RIGHT SIDE: Main Content */}
           <main className="flex-grow">
             <div className="backdrop-blur-md bg-white/5 dark:bg-gray-900/40 border border-gray-200/60 dark:border-white/10 rounded-[32px] p-8 md:p-12 shadow-sm transition-all duration-500">
-              
+
               {/* ACCOUNT TAB */}
               {activeTab === 'Account' && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -133,39 +151,39 @@ export default function ProfilePage() {
                     <h2 className="text-2xl font-black text-[#0F172A] dark:text-white uppercase tracking-tight">Privacy & Security</h2>
                     <p className="text-gray-500 dark:text-gray-400 text-sm">Protect your account and manage how your data is used.</p>
                   </div>
-                  
+
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="space-y-2">
                         <label className="text-xs font-black uppercase tracking-widest text-gray-400">New Password</label>
-                        <input 
-                          type="password" 
-                          name="password" 
+                        <input
+                          type="password"
+                          name="password"
                           placeholder="••••••••"
-                          value={user.password} 
+                          value={user.password}
                           onChange={handleChange}
-                          disabled={!isEditingPrivacy} 
-                          className={`w-full p-4 bg-gray-50/50 dark:bg-black/20 border rounded-xl font-semibold outline-none transition-all ${isEditingPrivacy ? 'border-[#7042F4] ring-2 ring-[#7042F4]/10' : 'border-gray-100 dark:border-white/10 cursor-not-allowed'}`} 
+                          disabled={!isEditingPrivacy}
+                          className={`w-full p-4 bg-gray-50/50 dark:bg-black/20 border rounded-xl font-semibold outline-none transition-all ${isEditingPrivacy ? 'border-[#7042F4] ring-2 ring-[#7042F4]/10' : 'border-gray-100 dark:border-white/10 cursor-not-allowed'}`}
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-xs font-black uppercase tracking-widest text-gray-400">Recovery Email</label>
-                        <input 
-                          type="email" 
-                          name="recoveryEmail" 
-                          value={user.recoveryEmail} 
+                        <input
+                          type="email"
+                          name="recoveryEmail"
+                          value={user.recoveryEmail}
                           onChange={handleChange}
-                          disabled={!isEditingPrivacy} 
-                          className={`w-full p-4 bg-gray-50/50 dark:bg-black/20 border rounded-xl font-semibold outline-none transition-all ${isEditingPrivacy ? 'border-[#7042F4] ring-2 ring-[#7042F4]/10' : 'border-gray-100 dark:border-white/10 cursor-not-allowed'}`} 
+                          disabled={!isEditingPrivacy}
+                          className={`w-full p-4 bg-gray-50/50 dark:bg-black/20 border rounded-xl font-semibold outline-none transition-all ${isEditingPrivacy ? 'border-[#7042F4] ring-2 ring-[#7042F4]/10' : 'border-gray-100 dark:border-white/10 cursor-not-allowed'}`}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-white/10">
                       <label className="text-xs font-black uppercase tracking-widest text-gray-400">Data & Tracking</label>
-                      
+
                       <div className="space-y-3">
-                        <div 
+                        <div
                           onClick={() => toggleCheckbox('trackMe')}
                           className={`flex items-center gap-3 cursor-pointer transition-opacity ${!isEditingPrivacy && 'opacity-60 cursor-not-allowed'}`}
                         >
@@ -175,7 +193,7 @@ export default function ProfilePage() {
                           <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Allow Vigiloo to track usage patterns</span>
                         </div>
 
-                        <div 
+                        <div
                           onClick={() => toggleCheckbox('locationData')}
                           className={`flex items-center gap-3 cursor-pointer transition-opacity ${!isEditingPrivacy && 'opacity-60 cursor-not-allowed'}`}
                         >
@@ -209,6 +227,26 @@ export default function ProfilePage() {
                   <div className="p-6 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl">
                     <p className="text-gray-500 dark:text-gray-400 font-medium">Notification and other custom settings are coming soon for Vigiloo.</p>
                   </div>
+
+                  {/* Danger Zone */}
+                  <div className="p-6 bg-red-50/50 dark:bg-red-950/20 border border-red-200 dark:border-red-500/20 rounded-2xl space-y-4">
+                    <div className="space-y-1">
+                      <h3 className="text-sm font-black uppercase tracking-widest text-red-500">Danger Zone</h3>
+                      <p className="text-gray-500 dark:text-gray-400 font-medium text-sm">
+                        Permanently delete your account and all associated data. This action cannot be undone.
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleDeleteAccount}
+                      className={`px-6 py-3 font-bold text-sm rounded-xl transition-all active:scale-[0.98] ${
+                        confirmDelete
+                          ? 'bg-red-700 text-white animate-pulse'
+                          : 'bg-red-500 hover:bg-red-600 text-white'
+                      }`}
+                    >
+                      {confirmDelete ? 'Are you sure? Click again to confirm.' : 'Delete Account'}
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -219,7 +257,7 @@ export default function ProfilePage() {
                     <h2 className="text-2xl font-black text-[#0F172A] dark:text-white uppercase tracking-tight">Help & Support</h2>
                     <p className="text-gray-500 dark:text-gray-400 text-sm">Find answers to common questions about your account.</p>
                   </div>
-                  
+
                   <div className="grid gap-4">
                     {faqs.map((faq, index) => (
                       <div key={index} className="p-6 bg-gray-50/50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl space-y-2">
