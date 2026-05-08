@@ -3,6 +3,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
+import WorldCard from "@/components/WorldCard";
+import LessonNode from "@/components/LessonNode";
+import BrainrotButton from "@/components/BrainrotButton";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -258,19 +261,18 @@ export default function YouthScamsPage() {
             />
 
             <div className="flex items-center justify-center space-x-4 lg:space-x-12 w-full pt-10">
-              {worlds.map((world) => {
-                const isActive = activeWorld === world.id;
-                return (
-                  <div key={world.id} 
-                    onClick={() => {setActiveWorld(world.id); setIsExploring(false); setOpenLesson(null);}} 
-                    className={`relative cursor-pointer transition-all duration-500 flex flex-col items-center group ${isActive ? 'scale-105 z-20' : 'scale-75 opacity-40 grayscale'}`}>
-                    <div className="w-32 h-32 lg:w-56 lg:h-56 rounded-[2.5rem] flex items-center justify-center text-5xl lg:text-8xl shadow-2xl transition-all duration-500 bg-gray-50 dark:bg-gray-900 group-hover:animate-bounce" 
-                      style={{ border: isActive ? `4px solid ${world.color}` : '4px solid transparent' }}>
-                      {world.icon}
-                    </div>
-                  </div>
-                );
-              })}
+              {worlds.map((world) => (
+                <WorldCard
+                  key={world.id}
+                  world={world}
+                  isActive={activeWorld === world.id}
+                  onSelect={() => {
+                    setActiveWorld(world.id);
+                    setIsExploring(false);
+                    setOpenLesson(null);
+                  }}
+                />
+              ))}
             </div>
 
             <div className="mt-8 text-center max-w-md px-4">
@@ -298,29 +300,16 @@ export default function YouthScamsPage() {
                       <path d="M 50 150 C 150 50, 250 250, 400 150 S 650 50, 800 150 S 1050 250, 1150 150" fill="transparent" stroke={worlds[activeWorld].color} strokeWidth="4" strokeDasharray="15,15" strokeLinecap="round" className="opacity-60 transition-all duration-700" />
                     </svg>
 
-                    {worlds[activeWorld].lessons.map((lesson, idx) => {
-                      const positions = ["-mt-32", "mt-32", "-mt-16", "mt-16", "-mt-24", "mt-24", "mt-0"];
-                      const isCurrent = idx === 0 || idx === 1;
-                      return (
-                        <div key={idx} className={`relative z-10 flex flex-col items-center group transition-all duration-700 ${positions[idx]}`}>
-                          <div className="flex space-x-1 mb-2">
-                            {[1, 2, 3].map((star) => (
-                              <span key={star} className={`text-sm ${isCurrent ? 'text-yellow-400 animate-pulse' : 'text-gray-300 dark:text-gray-700'}`}>★</span>
-                            ))}
-                          </div>
-                          
-                          <button onClick={() => setOpenLesson(idx)} className={`relative flex items-center justify-center transition-all duration-300 transform hover:scale-110 w-20 h-20 ${isCurrent ? 'scale-110' : 'grayscale opacity-60'}`}>
-                            <div className="absolute inset-0 rounded-[2rem] rotate-12 opacity-20" style={{ backgroundColor: isCurrent ? worlds[activeWorld].color : '#1e293b' }} />
-                            <div className={`w-full h-full rounded-[1.8rem] flex flex-col items-center justify-center border-b-8 border-r-4 ${isCurrent ? 'bg-white dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-900'}`} style={{ borderColor: isCurrent ? worlds[activeWorld].color : '#0f172a' }}>
-                              <span className="text-2xl font-black">{idx + 1}</span>
-                            </div>
-                          </button>
-                          <div className="absolute -bottom-12 whitespace-nowrap text-center">
-                            <h4 className={`text-xs font-bold ${isCurrent ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>{lesson}</h4>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {worlds[activeWorld].lessons.map((lesson, idx) => (
+                      <LessonNode
+                        key={idx}
+                        lesson={lesson}
+                        idx={idx}
+                        isCurrent={idx === 0 || idx === 1}
+                        color={worlds[activeWorld].color}
+                        onOpen={() => setOpenLesson(idx)}
+                      />
+                    ))}
                   </div>
                 </div>
 
@@ -393,32 +382,33 @@ export default function YouthScamsPage() {
 
                       <div className="w-full lg:w-48 flex flex-col gap-3 h-fit lg:mt-16">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-center lg:text-left px-2">Attention Span Mode</span>
-                        <button 
-                          onClick={() => setBrainrotType(brainrotType === 'subway' ? 'none' : 'subway')}
-                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'subway' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                        >
-                          Subway Surfers
-                        </button>
-                        <button 
-                          onClick={() => setBrainrotType(brainrotType === 'minecraft' ? 'none' : 'minecraft')}
-                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'minecraft' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                        >
-                          Minecraft Parkour
-                        </button>
-                        
-                        <button 
-                          onClick={() => setBrainrotType(brainrotType === 'fruit' ? 'none' : 'fruit')}
-                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'fruit' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                        >
-                          Fruit Sensory
-                        </button>
+                        <BrainrotButton
+                          type="subway"
+                          currentType={brainrotType}
+                          label="Subway Surfers"
+                          onClick={() => setBrainrotType(brainrotType === "subway" ? "none" : "subway")}
+                        />
 
-                        <button 
-                          onClick={() => setBrainrotType(brainrotType === 'familyguy' ? 'none' : 'familyguy')}
-                          className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg border-2 transition-all ${brainrotType === 'familyguy' ? 'bg-green-500 text-white border-green-400' : 'bg-gray-100 dark:bg-gray-800 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                        >
-                          Family Guy
-                        </button>
+                        <BrainrotButton
+                          type="minecraft"
+                          currentType={brainrotType}
+                          label="Minecraft Parkour"
+                          onClick={() => setBrainrotType(brainrotType === "minecraft" ? "none" : "minecraft")}
+                        />
+
+                        <BrainrotButton
+                          type="fruit"
+                          currentType={brainrotType}
+                          label="Fruit Sensory"
+                          onClick={() => setBrainrotType(brainrotType === "fruit" ? "none" : "fruit")}
+                        />
+
+                        <BrainrotButton
+                          type="familyguy"
+                          currentType={brainrotType}
+                          label="Family Guy"
+                          onClick={() => setBrainrotType(brainrotType === "familyguy" ? "none" : "familyguy")}
+                        />
 
                         <div className="h-[2px] bg-gray-100 dark:bg-gray-800 my-2" />
 
