@@ -1,11 +1,21 @@
 Vigiloo - Team 4
 
-1. Nathan Soto - nathsoto1 - Scrum Master 
-2. Steven Nguyen - sngu114 - UI/UX Designer
-3. Andy Tran - atran66 - Software Architect
-4. Sergio Nuno Zuniga - snunoz - Senior Developer
-5. Caleb Zeringue - Yeleb  - Product Tester
-6. Marcus Hudson - mmarcvss - Pipeline Engineer
+1. Scrum Master - Nathan Soto - nathsoto1
+2. UI/UX Designer - Steven Nguyen - sngu114
+3. Software Architect - Andy Tran - atran66 
+4. Senior Developer - Sergio Nuno Zuniga - snunoz
+5. Product Tester - Caleb Zeringue - Yeleb
+6. Pipeline Engineer - Marcus Hudson - mmarcvss
+
+Link to deployed website: https://vigiloo.vercel.app/
+
+Test Login:
+Username/Email: test@gmail.com
+Password: test
+
+^^ Use this to gain access: ^^
+
+Signup page works but there are limits due to free database.
 
 
 Description of Project:
@@ -13,6 +23,13 @@ Capstone project for CSC 4330 - Software Systems Development (Section 2) with Pr
 
 The purpose of Vigiloo is to create an easy to use cybersecurity educational platform for non-technical users. Many people are victims to online scams, phishing attacks, account takeovers, and identity theft because they do not fully understand how cyber threats operate or how to recognize the signs of potential cyberattacks. Cybersecurity resources that exists are overly techinical, overwhelming, or designed for IT professionals rather than for everday users. Our solution will be an interactive learning application that simplifies cybersecurity concepts and presents them in a clear, engaging, and practical way. The platform will feature gamified learning courses, real world scam simulation, and tools to assist users on recognizing scams. By combining education, interactive practice, and real time assistance tools, our project aims to empower users with the confidence and knowledge needed to stay safe online.
 
+
+Platforms code is known to work on:
+- macOS 
+- Windows 10/11 
+- Google Chrome (Version 110+)
+- Firefox (Version 110+)
+- Safari (Version 16+)
 
 Frontend:
 - Next.js 
@@ -26,19 +43,11 @@ Backend:
 - RSS-Parser
 - Groq
 
-
-Platforms code is known to work on:
-- macOS (Intel + Apple Silicon)
-- Windows 10/11 (via PowerShell, CMD, or Git Bash)
-- Linux (Ubuntu recommended)
-- Google Chrome (Version 110+)
-- Firefox (Version 110+)
-- Safari (Version 16+)
-- Microsoft Edge (Chromium-based)
-
-
 Kanban board link:
 https://github.com/users/sngu114/projects/1
+
+Designs & Code standards:
+https://drive.google.com/drive/folders/1ZGVBE-Ra9w2iwmc9hYvJdbCSiAF14tC1?usp=sharing
 
 
 List of dependencies and versions:
@@ -60,6 +69,8 @@ Prerequisites:
 - Git: https://git-scm.com/install/
 - Web Browser: Chrome, Firefox, or Edge
 
+
+TO RUN LOCALLY:
 
 How to download dependencies/Commands:
 
@@ -85,6 +96,10 @@ Copy this into it:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 GROQ_API_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+URLHAUSE_AUTH_KEY=
+
+contact nathsoto1 for invite to supabase + groq. contact atran66 for urlhause invite. Once invited you can grab your API keys and paste them here in their respective places.
 
 These are the supabase and groq API keys that you will need to access your own local version of the project. Without these, the project will likely crash or show errors. 
 
@@ -94,4 +109,6 @@ npm run dev
 
 Then open a browser and enter in " http://localhost:3000 " into the url bar.
 
+
+Note: the AI does work but there are limits to the requests made.
 
