@@ -109,6 +109,7 @@ npm run dev
 
 Then open a browser and enter in " http://localhost:3000 " into the url bar.
 
+Once on the login page, you can use the login at the top of this README.
 
 Note: the AI does work but there are limits to the requests made.
 
