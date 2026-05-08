@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { supabase } from '@/lib/supabase';
@@ -16,7 +16,7 @@ export default function ProfilePage() {
 
   const [user, setUser] = useState({
     name: "Mooyah Burger",
-    email: "TaiChen@example.com",
+    email: "",
     joinedDate: "March 2026",
     bio: "I was born on my birthday.",
     password: "",
@@ -24,6 +24,20 @@ export default function ProfilePage() {
     trackMe: false,
     locationData: false
   });
+
+  useEffect(() => {
+  const getUser = async () => {
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+    if (authUser) {
+      setUser((prev) => ({
+        ...prev,
+        email: authUser.email ?? "",
+        recoveryEmail: authUser.email ?? "",
+      }));
+    }
+  };
+  getUser();
+}, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
