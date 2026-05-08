@@ -93,11 +93,11 @@ You would need to create a file in the root called .env.local
 
 Copy this into it:
 
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-GROQ_API_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-URLHAUSE_AUTH_KEY=
+- NEXT_PUBLIC_SUPABASE_URL=
+- NEXT_PUBLIC_SUPABASE_ANON_KEY=
+- GROQ_API_KEY=
+- SUPABASE_SERVICE_ROLE_KEY=
+- URLHAUSE_AUTH_KEY=
 
 contact nathsoto1 for invite to supabase + groq. contact atran66 for urlhause invite. Once invited you can grab your API keys and paste them here in their respective places.
 
