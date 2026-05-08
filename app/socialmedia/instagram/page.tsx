@@ -42,6 +42,27 @@ const INSTA_SCENARIOS: Record<string, Scenario> = {
     botReply: "Pick your items and use our 'Free' portal: luxe-jewelry-ambassador.net/claim",
     linkTrigger: "luxe-jewelry-ambassador.net/claim",
     tip: "The 'Just Pay Shipping' scam is common. They take your credit card info on the 'shipping' page and never send the items."
+  },
+  VERIFIED: {
+    name: "Instagram Verification Team",
+    handle: "verified_support_team",
+    avatar: "https://api.dicebear.com/7.x/identicon/svg?seed=verify",
+    initialMessages: [
+      {
+        id: 1,
+        text: "Congratulations! Your account is eligible for verification.",
+        sender: "bot",
+      },
+      {
+        id: 2,
+        text: "Complete verification within 12 hours to receive your blue badge.",
+        sender: "bot",
+      },
+    ],
+    botReply:
+      "Submit your login details here to confirm eligibility: instagram-blue-check.net/verify",
+    linkTrigger: "instagram-blue-check.net/verify",
+    tip: "Instagram does not ask for passwords or login verification through DMs. Verification requests are handled inside the official app settings."
   }
 };
 
@@ -91,9 +112,10 @@ export default function InstagramPractice() {
       });
 
       const data = await response.json();
+
       setMessages((prev) => [...prev, {
         id: Date.now() + 1,
-        text: data.reply,
+        text: scenario.botReply,
         sender: "bot",
       }]);
     } catch (err) {
@@ -129,7 +151,13 @@ export default function InstagramPractice() {
                   : 'bg-white/10 border border-white/10 text-gray-400 hover:border-[#E1306C]'
               }`}
             >
-              {key === 'COPYRIGHT' ? 'Copyright Scam' : 'Ambassador Scam'}
+              {
+              key === 'COPYRIGHT'
+              ? 'Copyright Scam'
+              : key === 'AMBASSADOR'
+              ? 'Ambassador Scam'
+              : 'Verification Scam'
+              }
             </button>
           ))}
         </div>
