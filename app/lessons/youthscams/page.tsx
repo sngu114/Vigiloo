@@ -208,7 +208,7 @@ export default function YouthScamsPage() {
       "0-1": "YouTuberName2",
       "1-0": "Callon",
       "1-1": "YouTuberName4",
-      "2-0": "YouTuberName5",
+      "2-0": "Kaspersky",
       "2-1": "YouTuberName6",
     };
     return credits[`${worldId}-${lessonIdx}`] || "Unknown Creator";

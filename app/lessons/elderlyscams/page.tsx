@@ -67,15 +67,12 @@ export default function ElderlyScamsPage() {
   }, []);
 
   const lessons = [
-    { id: 1, points: 25, title: "FBI WARNS OF QR CODE SCAMS", description: "NBC NEWS", image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=400", videoPath: "qrcodescam.mp4" },
-    { id: 2, points: 30, title: "That Official Email May Be a Trap", description: "A deep dive into 'Phishing'—the art of creating fake messages that look exactly like your bank or the IRS.", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400", videoPath: "lesson2.mp4" },
-    { id: 3, points: 40, title: "Don't Answer That 'Emergency' Call", description: "The 'Grandparent Scam' is rising. Learn the immediate steps to verify a caller's identity before sending money.", image: "https://images.unsplash.com/photo-1520923642038-b4259ace9451?auto=format&fit=crop&q=80&w=400", videoPath: "lesson3.mp4" },
-    { id: 4, points: 25, title: "The Hidden Risks of Social Sharing", description: "Why your 'Public' posts are a goldmine for impersonators and how to lock down your private information.", image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=400", videoPath: "lesson4.mp4" },
-    { id: 5, points: 50, title: "How to Spot a Fake Online Store", description: "Thousands of fraudulent websites go live daily. Learn to check for encryption and verified seller badges.", image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=400", videoPath: "lesson5.mp4" },
-    { id: 6, points: 75, title: "What to Do If You Are Hacked", description: "Minutes matter. Follow this emergency checklist to freeze your credit and secure your legacy.", image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=400", videoPath: "lesson6.mp4" },
-    { id: 7, points: 35, title: "The New Era of Artificial Intelligence Scams", description: "AI can now mimic voices and faces. Learn how to set up a 'Family Safety Word' for total verification.", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400", videoPath: "lesson7.mp4" },
-    { id: 8, points: 25, title: "Protecting Your Digital Estate", description: "Ensure your digital photos, accounts, and passwords are passed down securely to your loved ones.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=400", videoPath: "lesson8.mp4" },
-    { id: 9, points: 60, title: "Becoming a Human Firewall", description: "The final test. Combine everything you've learned to spot advanced deception in real-time simulations.", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400", videoPath: "lesson9.mp4" }
+    { id: 1, points: 25, title: "FBI WARNS OF QR CODE SCAMS", description: "NBC NEWS", image: "https://images.unsplash.com/photo-1600147131759-880e94a6185f?q=80&w=436&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", videoPath: "qrcodescam.mp4" },
+    { id: 2, points: 30, title: "CARD DECLINED SCAM", description: "CBS4", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400", videoPath: "carddeclinedscam.mp4" },
+    { id: 3, points: 40, title: "AI PHONE CALL SCAM", description: "TODAY", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400", videoPath: "aiphonecallscam.mp4" },
+    { id: 4, points: 25, title: "BITCOIN SCAM", description: "GOOD MORNING AMERICA", image: "https://images.unsplash.com/photo-1623227413711-25ee4388dae3?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", videoPath: "bitcoinscam.mp4" },
+    { id: 5, points: 50, title: "CALL IMPERSONATION SCAM", description: "HAWAII NEWS NOW", image: "https://images.unsplash.com/photo-1618590067824-5ba32ca76ce9?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", videoPath: "impersonationscam.mp4" },
+    { id: 6, points: 75, title: "FAKE ROMANCE SCAM", description: "ABC7 News Bay Area", image: "https://images.unsplash.com/photo-1587483166702-bf9aa66bd791?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", videoPath: "fakeromancescam.mp4" },
   ];
 
   return (
@@ -171,18 +168,7 @@ export default function ElderlyScamsPage() {
           ))}
         </div>
 
-        <div className="bg-[#7042F4] rounded-[2.5rem] p-10 text-white flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-2">Academic Goal</p>
-            <h3 className="text-3xl font-black mb-4">Vigiloo Security Badge</h3>
-            <p className="font-medium opacity-80 leading-relaxed max-w-md">
-              Complete the curriculum to finalize your status as a Certified Digital Safety Guardian.
-            </p>
-          </div>
-          <button className="bg-white text-[#7042F4] px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-colors cursor-pointer">
-            Claim Certificate
-          </button>
-        </div>
+        
       </div>
 
       {activeLesson && (
