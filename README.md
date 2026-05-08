@@ -10,8 +10,8 @@ Vigiloo - Team 4
 Link to deployed website: https://vigiloo.vercel.app/
 
 Test Login:
-Username/Email: test@gmail.com
-Password: test
+- Username/Email: test@gmail.com
+- Password: test
 
 ^^ Use this to gain access: ^^
 
