@@ -43,29 +43,6 @@ const TIKTOK_SCENARIOS: Record<string, Scenario> = {
     botReply: "Claim your coins at: bit.ly/free-tt-coins-claim",
     linkTrigger: "bit.ly/free-tt-coins-claim",
     tip: "Scammers use 'Sense of Urgency' (the 30-minute limit) to make you panic and click without thinking."
-  },
-  CREATOR_FUND: {
-    name: "TikTok Creator Fund",
-    handle: "creator_rewards_center",
-    avatar: "https://api.dicebear.com/7.x/shapes/svg?seed=creatorfund",
-    initialMessages: [
-      {
-        id: 1,
-        text: "Your videos qualify for a Creator Fund bonus payout.",
-        sender: "bot"
-      },
-      {
-        id: 2,
-        text: "Submit your payout details within 24 hours to avoid losing eligibility.",
-        sender: "bot"
-      }
-    ],
-    botReply:
-      "Verify your payout account here: tiktok-creatorfund-bonus.net/claim",
-    linkTrigger:
-      "tiktok-creatorfund-bonus.net/claim",
-    tip:
-      "Scammers often pretend to offer money or creator rewards to steal account credentials and banking information."
   }
 };
 
@@ -114,13 +91,12 @@ const handleSendMessage = async (e: FormEvent) => {
       }),
     });
 
-    await response.json();
-
+    const data = await response.json();
     setMessages((prev) => [...prev, {
-     id: Date.now() + 1,
-     text: scenario.botReply,
-     sender: "bot",
-  }]);
+      id: Date.now() + 1,
+      text: data.reply,
+      sender: "bot",
+    }]);
   } catch {
     setMessages((prev) => [...prev, {
       id: Date.now() + 1,
@@ -146,13 +122,7 @@ const handleSendMessage = async (e: FormEvent) => {
               onClick={() => setCurrentType(key as keyof typeof TIKTOK_SCENARIOS)}
               className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest transition-all ${currentType === key ? 'bg-[#FE2C55] text-white shadow-lg scale-105' : 'bg-white/10 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-400 hover:border-[#FE2C55]'}`}
             >
-             {
-             key === 'VERIFICATION'
-             ? 'Verification Scam'
-             : key === 'GIVEAWAY'
-             ? 'Giveaway Scam'
-             : 'Creator Fund Scam'
-            }
+              {key === 'VERIFICATION' ? 'Verification Scam' : 'Giveaway Scam'}
             </button>
           ))}
         </div>
