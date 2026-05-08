@@ -17,6 +17,7 @@ export default function QuizPage() {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [questionOffset, setQuestionOffset] = useState(0);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -25,9 +26,51 @@ export default function QuizPage() {
         .select("*")
         .order("id", { ascending: true });
 
-      if (data && data.length > 0) {
-        setQuestions(data);
-      }
+        if (data && data.length > 0) {
+          setQuestions(data);
+        } else {
+          setQuestions([
+            {
+              id: 1,
+              question:
+                "You receive an email saying your Netflix account was suspended and you must log in immediately through a provided link.",
+              option_a: "Streaming services always suspend accounts by email",
+              option_b: "The urgent login request and suspicious link are red flags",
+              option_c: "It must be real because it mentions Netflix",
+              option_d: "Emails from companies are always trustworthy",
+              correct_answer: "The urgent login request and suspicious link are red flags",
+              explanation:
+                "Scammers often use fake account suspension warnings and urgent login links to pressure users into giving away their credentials.",
+            },
+            {
+              id: 2,
+              question:
+                "A text message says you won a free iPhone and asks you to click a link.",
+              option_a: "Free giveaways are always real",
+              option_b: "The suspicious link and prize offer are phishing red flags",
+              option_c: "It must be safe because it mentions Apple",
+              option_d: "Text messages cannot be scams",
+              correct_answer:
+                "The suspicious link and prize offer are phishing red flags",
+              explanation:
+                "Scammers often use fake prizes and suspicious links to steal personal information.",
+            },
+            
+            {
+              id: 3,
+              question:
+                "Someone on TikTok promises fast money if you send them your login code.",
+              option_a: "Sharing login codes is safe with influencers",
+              option_b: "Login codes should never be shared online",
+              option_c: "TikTok creators always help followers make money",
+              option_d: "Codes are only temporary so they are harmless",
+              correct_answer:
+                "Login codes should never be shared online",
+              explanation:
+                "Verification and login codes can give scammers access to your account.",
+            },
+          ]);
+        }
       setLoading(false);
     }
     fetchQuestions();
@@ -38,8 +81,8 @@ export default function QuizPage() {
   const dailyQuestion = useMemo(() => {
     if (questions.length === 0) return null;
     const index = questions.length > 0
-      ? Math.floor(today.getTime() / (1000 * 60 * 60 * 24)) % questions.length
-      : 0;
+    ? (Math.floor(today.getTime() / (1000 * 60 * 60 * 24)) + questionOffset) % questions.length
+    : 0;
     const q = questions[index];
     return {
       id: q.id,
@@ -48,7 +91,7 @@ export default function QuizPage() {
       correctAnswer: q.correct_answer,
       explanation: q.explanation,
     };
-  }, [questions]);
+  }, [questions, questionOffset]);
 
   const shuffledOptions = useMemo(() => {
     if (!dailyQuestion) return [];
@@ -120,6 +163,20 @@ export default function QuizPage() {
           >
             Check Answer
           </button>
+           
+          {submitted && !isCorrect && (
+            <button
+              onClick={() => {
+                setQuestionOffset((prev) => prev + 1);
+                setSelected("");
+                setSubmitted(false);
+              }}
+             className="mt-4 w-full cursor-pointer rounded-2xl bg-[#7042F4] py-4 text-lg font-bold text-white shadow-xl transition-all hover:opacity-90 active:scale-[0.98]"
+            >
+             Practice Another Question
+            </button>
+          )}
+
           {submitted && (
             <QuizFeedback
               isCorrect={isCorrect}
