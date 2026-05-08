@@ -71,7 +71,13 @@ const QuizModal = ({ onClose, tableName }: { onClose: () => void, tableName: str
   return (
     <div className="fixed inset-0 bg-black/90 backdrop-blur-xl flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300">
       <div className="bg-white dark:bg-[#0F172A] w-full max-w-2xl rounded-[3rem] p-8 md:p-12 border-4 border-[#7042F4] relative shadow-[0_0_50px_rgba(112,66,244,0.3)]">
-        <button onClick={onClose} className="absolute top-8 right-8 text-gray-400 hover:text-white text-xl font-black transition-colors">✕</button>
+        {/* UPDATED CLOSE BUTTON */}
+        <button 
+          onClick={onClose} 
+          className="absolute top-6 right-6 text-gray-400 hover:text-[#7042F4] dark:hover:text-[#7042F4] text-xl font-black transition-colors z-20"
+        >
+          ✕
+        </button>
 
         {!showResults ? (
           <div className="animate-in slide-in-from-right-5 duration-300">
@@ -119,7 +125,6 @@ const QuizModal = ({ onClose, tableName }: { onClose: () => void, tableName: str
     </div>
   );
 };
-
 const XPTracker = () => (
   <div className="flex-grow w-full">
     <div className="flex justify-between mb-2">
@@ -190,7 +195,7 @@ export default function YouthScamsPage() {
       "0-1": "social_media_lesson2.mp4", 
       "1-0": "robloxscam_lesson1.mp4",
       "1-1": "robloxscam_lesson2.mp4", 
-      "2-0": "web_browsing_lesson1.mp4",
+      "2-0": "web_browsing_gettingstarted.mp4",
       "2-1": "web_browsing_lesson2.mp4",
     };
     const fileName = videoFiles[`${worldId}-${lessonIdx}`];
