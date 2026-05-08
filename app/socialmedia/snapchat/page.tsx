@@ -2,34 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const PHISHING_LINKS = [
-  "bit.ly/free-snaps-gift",
-  "snapchatverify-login.com",
-  "free-nitro-snaps.net",
-];
+const PHISHING_LINK = "bit.ly/free-snaps-gift";
 
 export default function SnapchatPractice() {
   const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "heyyyy did you see that link I sent you?",
-      sender: "friend",
-    },
-    {
-      id: 2,
-      text: "it's for the free gift card giveaway bit.ly/free-snaps-gift",
-      sender: "friend",
-    },
-    {
-      id: 3,
-      text: "Snapchat says you need to verify your account at snapchatverify-login.com",
-      sender: "friend",
-    },
-    {
-      id: 4,
-      text: "Claim your free Nitro and premium Snapchat features at free-nitro-snaps.net",
-      sender: "friend",
-    },
+    { id: 1, text: "heyyyy did you see that link I sent you?", sender: "friend" },
+    { id: 2, text: "it's for the free gift card giveaway ", sender: "friend" }
   ]);
   const [input, setInput] = useState("");
   const [isPhished, setIsPhished] = useState(false);
@@ -73,29 +51,17 @@ export default function SnapchatPractice() {
   };
 
   const renderMessageText = (text: string) => {
-    let content: React.ReactNode[] = [text];
-  
-    PHISHING_LINKS.forEach((link) => {
-      content = content.flatMap((part) => {
-        if (typeof part !== "string" || !part.includes(link)) return [part];
-  
-        const [before, after] = part.split(link);
-  
-        return [
-          before,
-          <button
-            key={link + before}
-            onClick={() => setIsPhished(true)}
-            className="text-blue-600 underline cursor-pointer hover:text-blue-800"
-          >
-            {link}
-          </button>,
-          after,
-        ];
-      });
-    });
-  
-    return <>{content}</>;
+    if (!text.includes(PHISHING_LINK)) return text;
+    const [before, after] = text.split(PHISHING_LINK);
+    return (
+      <>
+        {before}
+        <button onClick={() => setIsPhished(true)} className="text-blue-600 underline cursor-pointer hover:text-blue-800">
+          {PHISHING_LINK}
+        </button>
+        {after}
+      </>
+    );
   };
 
   return (
