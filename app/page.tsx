@@ -122,12 +122,24 @@ export default function LoginPage() {
 
             {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
 
-            <button
-              type="submit"
-              className="w-full flex justify-center py-4 px-6 rounded-lg shadow-xl text-base font-semibold text-white bg-[#7042F4] hover:bg-[#5B34E5] transition-all transform active:scale-[0.98] cursor-pointer"
-            >
-              Sign In to Vigiloo
-            </button>
+            <div className="space-y-3">
+              <button
+                type="submit"
+                className="w-full flex justify-center py-4 px-6 rounded-lg shadow-xl text-base font-semibold text-white bg-[#7042F4] hover:bg-[#5B34E5] transition-all transform active:scale-[0.98] cursor-pointer"
+              >
+                Sign In to Vigiloo
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => router.push('/home')}
+                className="w-full flex justify-center py-3 px-6 rounded-lg text-sm font-bold text-[#7042F4] border-2 border-[#7042F4]/20 hover:bg-[#7042F4]/5 transition-all cursor-pointer"
+              >
+                Disclaimer:
+                This project is over, but you can still view the website by clicking here.  
+                (There's an easter egg with "About Us" + Dark Mode.)
+              </button>
+            </div>
           </form>
 
           <div className="relative py-2">
